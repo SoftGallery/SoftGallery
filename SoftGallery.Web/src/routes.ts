@@ -6,7 +6,8 @@ import LoginAdm from "./pages/LoginAdm.vue"
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/login-adm', component: LoginAdm }
+  { path: '/login-adm', component: LoginAdm },
+  { path: '/contato', component: LoginAdm }
 ]
 
 const router = createRouter({
