@@ -6,7 +6,7 @@ import CardProduto from '../components/CardProduto.vue';
 
 <template>
 <p>oi estou na HOME</p>
-<CardProduto nome_produto="Smartphone XYZ Pro" tipo="erro"></CardProduto>
+<CardProduto nome_produto="Smartphone Xiaomi Redmi" tipo="erro"></CardProduto>
 </template>
 
 
