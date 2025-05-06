@@ -10,5 +10,4 @@ import CardProduto from "../components/CardProduto.vue"
 
 <style scoped>
 
-
 </style>
