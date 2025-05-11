@@ -11,6 +11,7 @@
         <el-menu-item index="/sobre">Sobre</el-menu-item>
         <el-menu-item index="/contato">Contato</el-menu-item>
         <el-menu-item index="/login-adm">Login</el-menu-item>
+        <heart-button></heart-button>
       </el-menu>
     </el-header>
 
@@ -22,4 +23,5 @@
 </template>
 
 <script lang="ts" setup>
+import HeartButton from './components/HeartButton.vue';
 </script>
