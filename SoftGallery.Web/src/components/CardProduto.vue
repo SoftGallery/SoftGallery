@@ -33,7 +33,7 @@
             <el-rate v-model="value2" :colors="colors"></el-rate>
           </div>
           <div style="margin-top: 16px; text-align: right;">
-            <el-button type="text">Operation button</el-button>
+            <CartButton></CartButton>
           </div>
         </el-card>
         <div class="bottom clearfix" style="margin-top: 10px;">
@@ -45,6 +45,7 @@
 </el-row>
 </template>
 <script>
+import CartButton from './CartButton.vue';
 
 export default {
     name: 'MensagemDinamica',
@@ -57,6 +58,10 @@ export default {
             type: String,
             required: true
         }
+    },
+    components: {
+      CartButton
     }
 }
+
 </script>

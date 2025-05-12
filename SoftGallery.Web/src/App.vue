@@ -11,11 +11,14 @@
         <el-menu-item index="/sobre">Sobre</el-menu-item>
         <el-menu-item index="/contato">Contato</el-menu-item>
         <el-menu-item index="/login-adm">Login</el-menu-item>
-        <div class="interacoes">
+        <el-menu-item>
+          <div class="interacoes">
           <barra-de-pesquisa></barra-de-pesquisa>
           <heart-button></heart-button>
           <cart-button></cart-button>
         </div>
+        </el-menu-item>
+        
       </el-menu>
       
     </el-header>
