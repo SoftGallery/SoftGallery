@@ -1,16 +1,4 @@
 <template>
-  <div>
-    <h1>Bem-vindo ao site!</h1>
-
-    <!-- Muda o conteúdo conforme o valor da prop 'tipo' -->
-    <p v-if="tipo === 'info'">Esta é uma mensagem de informação.</p>
-    <p v-else-if="tipo === 'erro'">Ocorreu um erro no sistema.</p>
-    <p v-else>Mensagem padrão exibida.</p>
-    <p>{{ nome_produto }}</p>
-    <h1>Novidades</h1>
-  </div>
-  <el-row justify="center">
-    <el-col :span="4">
       <el-card style="border-radius: 15px;" :body-style="{ padding: '1px' }">
         <div style="display: flex; justify-content: center; align-items: center; position: relative;">
           <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
@@ -40,8 +28,6 @@
           </div>
         </div>
       </el-card>
-    </el-col>
-  </el-row>
 </template>
 <script>
 import CartButton from './CartButton.vue';

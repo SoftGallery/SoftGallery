@@ -6,7 +6,21 @@ import CardProduto from '../components/CardProduto.vue';
 
 <template>
 <p>oi estou na HOME</p>
-<CardProduto nome_produto="Smartphone Xiaomi Redmi" tipo="erro"></CardProduto>
+<el-row :gutter="6">
+  <el-col :span="4">
+    <CardProduto />
+  </el-col>
+  <el-col :span="4">
+    <CardProduto />
+  </el-col>
+  <el-col :span="4">
+    <CardProduto />
+  </el-col>
+  <el-col :span="4">
+    <CardProduto />
+  </el-col>
+</el-row>
+
 </template>
 
 
