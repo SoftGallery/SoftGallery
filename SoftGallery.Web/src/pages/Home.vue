@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import CardProduto from '../components/CardProduto.vue';
+import CardProduto from "../components/CardProduto.vue";
 
 
 </script>
