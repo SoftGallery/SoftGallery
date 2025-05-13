@@ -1,8 +1,7 @@
 <template>
   <el-card style="border-radius: 15px;" :body-style="{ padding: '1px' }">
     <div style="display: flex; justify-content: center; align-items: center; position: relative;">
-      <div style="position: absolute;top: 10px;left: 10px;background-color: red;color: white;padding: 4px 8px;border-radius: 10px;font-size: 12px;font-weight: bold;
-">
+      <div style="position: absolute;top: 10px;left: 10px;background-color: red;color: white;padding: 4px 8px;border-radius: 10px;font-size: 12px;font-weight: bold;">
         { Desconto }
       </div>
 
