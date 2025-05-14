@@ -16,6 +16,7 @@
           <barra-de-pesquisa></barra-de-pesquisa>
           <heart-button></heart-button>
           <cart-button></cart-button>
+          <div></div>
         </div>
         </el-menu-item>
         
@@ -39,10 +40,14 @@ import CartButton from './components/CartButton.vue';
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 .interacoes{
       display: flex;
       gap: 7px;
       margin-left: auto;
       align-items: center;
+}
+body{
+  font-family: "Geist", sans-serif;
 }
 </style>
