@@ -8,7 +8,8 @@ import Section from '../components/Section.vue';
 <template>
   <p>oi estou na HOME</p>
 
-  <Section></Section>
+  <Section type="destaques"></Section>
+  <Section type="novidades"></Section>
 </template>
 
 
