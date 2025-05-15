@@ -44,11 +44,34 @@
             </el-row>
         </div>
         </section>
+
+        <section v-if="type == 'categorias'">
+          <div class="container">
+            <div class="header">
+                <div class="header-text">
+                    <h2 class="titulo">
+                         Categorias 
+                    </h2>
+                    <p class="descricao">
+                         Explore nossos produtos por categoria 
+                    </p>
+                </div>
+                <el-button class="view-all" type="text" icon="el-icon-arrow-right">Ver todos</el-button>
+            </div>
+                <el-row :gutter="0">
+                  <el-col v-for="item in Categorias" :span="5">
+                    <CardCategoria :nome="item.nome" :quantidade="item.quantidade"></CardCategoria>
+                  </el-col>
+
+                <!-- Aqui você irá percorrer cada produto que vier do Backend -->
+            </el-row>
+        </div>
+        </section>
 </template>
 
 <script>
-import CardCategorias from './CardCategorias.vue';
 import CardProduto from './CardProduto.vue';
+import CardCategoria from './CardCategoria.vue';
 
 export default {
     props: {
@@ -123,20 +146,34 @@ export default {
     precoOriginal: 249.90,
     avaliacao: 4.6
   }
-]    
+  
+],
+
+ Categorias: [
+  { nome: 'Eletrônicos', quantidade: 120 },
+  { nome: 'Roupas', quantidade: 85 },
+  { nome: 'Livros', quantidade: 60 },
+  { nome: 'Beleza', quantidade: 40 },
+  { nome: 'Esportes', quantidade: 30 },
+  { nome: 'Móveis', quantidade: 25 },
+  { nome: 'Brinquedos', quantidade: 50 },
+  { nome: 'Papelaria', quantidade: 15 }
+]
+
         }
             
     },
     components:{
         CardProduto,
-        CardCategorias
+        CardCategoria
     }
+    
 }
 </script>
 
 <style>
-.novidades-section{
-  padding: 2rem 0;
+section{
+  padding: 0px 24px;
 
 }
 @media (min-width: 768px){

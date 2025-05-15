@@ -6,10 +6,9 @@ import Section from '../components/Section.vue';
 </script>
 
 <template>
-  <p>oi estou na HOME</p>
-
   <Section type="destaques"></Section>
   <Section type="novidades"></Section>
+  <Section type="categorias"></Section>
 </template>
 
 
