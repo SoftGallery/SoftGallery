@@ -1,4 +1,6 @@
-﻿namespace SoftGallery.Dominio.Services
+﻿using SoftGallery.Dominio.Models;
+
+namespace SoftGallery.Dominio.Services
 {
     public class ProdutoService
     {
@@ -8,94 +10,65 @@
         {
             this.dbContext = dbContext;
         }
+        public List<Produto> ListarProdutos()
+        {
+            return dbContext.Produtos.ToList();
+        }
 
+        public Produto RetornaProduto(string id)
+        {
+            Produto? produto = dbContext
+                .Produtos
+                .FirstOrDefault(p => p.Id == id);
+            return produto;
+        }
 
-
-/*            [HttpGet]
-            public ActionResult<IEnumerable<Produto>> GetProdutos()
+        public bool CriarProduto(Produto produto)
+        {
+            if (string.IsNullOrEmpty(produto.Id))
             {
-                return Ok(dbContext.Produtos);
+                produto.Id = Guid.NewGuid().ToString();
+                return false;
             }
 
-            [HttpGet("{id}")]
-            public ActionResult<IEnumerable<Produto>> GetProduto(string id)
+            dbContext.Produtos.Add(produto);
+            dbContext.SaveChanges();
+            return true;
+        }
+
+        public bool EditarProduto(string id, Produto produto)
+        {
+            Produto? produtoEncontrado =
+                dbContext
+                .Produtos
+                .FirstOrDefault(p => p.Id == id);
+
+            if (produtoEncontrado == null)
             {
-                Produto? produto = dbContext
-                    .Produtos
-                    .FirstOrDefault(p => p.Id == id);
-
-                if (produto is null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(produto);
+                return false;
             }
 
-            [HttpPost]
-            public ActionResult<Produto> CreateProduto(ProdutoDTO novoProdutoDTO)
+            produtoEncontrado.Nome = produto.Nome;
+            produtoEncontrado.Preco = produto.Preco;
+            dbContext.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteProduto(string id)
+        {
+            Produto? produtoEncontrado =
+                dbContext
+                .Produtos
+                .FirstOrDefault(p => p.Id == id);
+
+            if (produtoEncontrado == null)
             {
-                Produto novoProduto = new Produto(novoProdutoDTO.nome, novoProdutoDTO.preco);
-
-                dbContext.Produtos.Add(novoProduto);
-                dbContext.SaveChanges();
-
-                return CreatedAtAction(nameof(CreateProduto), novoProduto);
+                return false;
             }
 
-            [HttpPost("seed")]
-            public IActionResult Seed()
-            {
-                dbContext.Produtos.AddRange([
-                  new Produto("Café", 35) { Id = "p1" },
-              new Produto("Água", 12) { Id = "p2" },
-              new Produto("Leite", 7) { Id = "p3" },
-              new Produto("Fralda", 80) { Id = "p4" },
-              new Produto("Desinfetante", 15) { Id = "p5" },
-            ]);
-                dbContext.SaveChanges();
-
-                return NoContent();
-            }
-
-            [HttpPut("{id}")]
-            public IActionResult UpdateProduto(string id, ProdutoDTO produtoAAtualizarDTO)
-            {
-                Produto? produtoEncontrado =
-                    dbContext
-                    .Produtos
-                    .FirstOrDefault(p => p.Id == id);
-
-                if (produtoEncontrado == null)
-                {
-                    return NotFound();
-                }
-
-                produtoEncontrado.Nome = produtoAAtualizarDTO.nome;
-                produtoEncontrado.Preco = produtoAAtualizarDTO.preco;
-                dbContext.SaveChanges();
-
-                return NoContent();
-            }
-
-            [HttpDelete("{id}")]
-            public IActionResult DeleteProduto(string id)
-            {
-                Produto? produtoEncontrado =
-                    dbContext
-                    .Produtos
-                    .FirstOrDefault(p => p.Id == id);
-
-                if (produtoEncontrado == null)
-                {
-                    return NotFound();
-                }
-
-                dbContext.Produtos.Remove(produtoEncontrado);
-                dbContext.SaveChanges();
-
-                return NoContent();
-            }
-        }*/
+            dbContext.Produtos.Remove(produtoEncontrado);
+            dbContext.SaveChanges();
+            return true;
+        }
     }
 }
