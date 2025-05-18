@@ -1,6 +1,6 @@
 ﻿namespace SoftGallery.Dominio
 {
-    public class Program
+    internal class Program
     {
         static void Main(string[] args)
         {

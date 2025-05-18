@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoftGallery.Dominio")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+18627762e5beec2daaac187e99d26694d83762b5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+908c26fb9a006612015de0f670171a9d9e37f824")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoftGallery.Dominio")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoftGallery.Dominio")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
