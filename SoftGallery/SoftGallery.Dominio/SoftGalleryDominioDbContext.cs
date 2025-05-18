@@ -9,6 +9,7 @@ namespace SoftGallery.Dominio;
 public partial class SoftGalleryDominioDbContext : DbContext
 {
     public DbSet<Produto> Produtos { get; set; }
+    public DbSet<Campanha> Campanhas { get; set; }
     public SoftGalleryDominioDbContext()
     {
     }

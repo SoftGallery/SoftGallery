@@ -1,0 +1,6 @@
+@SoftGallery.API_HostAddress = http://localhost:5051
+
+GET {{SoftGallery.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -9,13 +9,14 @@ namespace SoftGallery.Dominio.Models
         [Key]
         public string Id { get; set; }
         public string Nome { get; set; }
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
         public decimal Preco { get; set; }
 
-        public Produto(string nome, decimal preco)
+        public Produto(string nome, decimal preco, string? descricao = null)
         {
             this.Nome = nome;
             this.Preco = preco;
+            this.Descricao = descricao;
         }
 
         private Produto() { }
