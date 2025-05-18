@@ -16,12 +16,23 @@
                 <el-col v-for="item in produtosNovos" :span="5">
                     <CardProduto tipo="novidade" :nome="item.nome" :precoOriginal="item.precoOriginal" :avalicao="item.avaliacao"></CardProduto>
                 </el-col>
-
                 <!-- Aqui você irá percorrer cada produto que vier do Backend -->
             </el-row>
         </div>
+         <div class="containerNovidades">
+              <div class="header-text">
+                <h2 class="titulo2">
+                    Fique por dentro das novidades
+                </h2>
+                <p class="descricao2" style="font-size:19px;">Assine nossa newsletter e receba ofertas exclusivas e novidades em primeira mão.</p>
+                <div class="forms-newsletter">
+                  <el-input placeholder="Seu melhor e-mail" style="width: 240px" v-model="input"></el-input>
+                  <el-button size="large"  style="background-color: #18181B; color: white;">Assinar</el-button>
+                </div>
+                <p style="color:#6b7280; font-size:11px;" >Ao assinar, você concorda com nossa Política de Privacidade.</p>
+              </div>
+            </div>
         </section>
-
         <section v-if="type == 'destaques'" class="novidades-section">
         <div class="container">
             <div class="header">
@@ -44,7 +55,6 @@
             </el-row>
         </div>
         </section>
-
         <section v-if="type == 'categorias'">
           <div class="container">
             <div class="header">
@@ -211,4 +221,56 @@ section{
   font-size: 1rem;
   margin-top: 0.5rem;
 }
+.descricao2{
+  text-align: center;
+  color: #6b7280;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.titulo2{
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+
+
+.containerNovidades {
+  background-color: #f3f3f4;
+  width: 100%;
+  max-width: 1200px;
+  margin: 3rem auto 0;
+  padding: 2rem 1rem;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.forms-newsletter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.form-newsletter .el-input {
+  width: 240px;
+}
+
+.btn-assinar {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+
+}
+
+#BotaoEmail{
+  align-items: center;
+}
+
 </style>
+
