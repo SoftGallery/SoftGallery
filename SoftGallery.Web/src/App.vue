@@ -3,11 +3,16 @@
     <el-header>
       <el-menu class="menu" :router="true" mode="horizontal" :default-active="$route.path">
         <div class="menu">
-          <el-menu-item index="/">Home</el-menu-item>
-          <el-menu-item index="/sobre">Sobre</el-menu-item>
-          <el-menu-item index="/contato">Contato</el-menu-item>
-          <el-menu-item index="/login-adm">Login</el-menu-item>
-          <el-menu-item index="/adm/painel-adm">Adm</el-menu-item>
+          <div class="menu">
+            <el-menu-item index="/">Home</el-menu-item>
+            <el-menu-item index="/sobre">Sobre</el-menu-item>
+            <el-menu-item index="/contato">Contato</el-menu-item>
+            <el-menu-item index="/login-adm">Login</el-menu-item>
+            <el-menu-item index="/adm/painel-adm">Adm</el-menu-item>
+          </div>
+          <div>
+
+          </div>
         </div>
         <el-menu-item class="itens">
           <div class="interacoes">
