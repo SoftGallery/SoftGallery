@@ -4,14 +4,14 @@
       <el-menu class="menu" :router="true" mode="horizontal" :default-active="$route.path">
         <div class="menu">
           <div class="menu">
+            <Logo></Logo>
+          </div>
+          <div class="menu">
             <el-menu-item index="/">Home</el-menu-item>
             <el-menu-item index="/sobre">Sobre</el-menu-item>
             <el-menu-item index="/contato">Contato</el-menu-item>
             <el-menu-item index="/login-adm">Login</el-menu-item>
             <el-menu-item index="/adm/painel-adm">Adm</el-menu-item>
-          </div>
-          <div>
-
           </div>
         </div>
         <el-menu-item class="itens">
@@ -39,6 +39,7 @@ import HeartButton from './components/HeartButton.vue';
 import BarraDePesquisa from './components/BarraDePesquisa.vue';
 import CartButton from './components/CartButton.vue';
 import BarraLateral from './components/BarraLateral.vue'
+import Logo from './assets/Logo.vue'
 
 const route = useRoute();
 
@@ -75,5 +76,9 @@ body {
 .menu{
   display: flex;
   justify-content: space-between;
+}
+
+:root{
+      --el-color-primary: #4051d0 !important;
 }
 </style>

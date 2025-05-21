@@ -12,8 +12,8 @@
                 </div>
                 <el-button class="view-all" type="text" icon="el-icon-arrow-right">Ver todos</el-button>
             </div>
-            <el-row :gutter="0">
-                <el-col v-for="item in produtosNovos" :span="5">
+            <el-row :gutter="1">
+                <el-col v-for="item in produtosNovos" :span="4" style="margin-bottom: 25px;">
                     <CardProduto tipo="novidade" :nome="item.nome" :precoOriginal="item.precoOriginal" :avalicao="item.avaliacao"></CardProduto>
                 </el-col>
                 <!-- Aqui você irá percorrer cada produto que vier do Backend -->
@@ -46,8 +46,8 @@
                 </div>
                 <el-button class="view-all" type="text" icon="el-icon-arrow-right">Ver todos</el-button>
             </div>
-                <el-row :gutter="0">
-                <el-col v-for="item in produtosDestaque" :span="5">
+                <el-row :gutter="1">
+                <el-col v-for="item in produtosDestaque" :span="4" style="margin-bottom: 25px;">
                     <CardProduto tipo="destaque" :nome="item.nome" :precoOriginal="item.precoOriginal" :precoDesconto="item.precoDesconto" :desconto="item.desconto" :avalicao="item.avaliacao"></CardProduto>
                 </el-col>
 
@@ -68,10 +68,10 @@
                 </div>
                 <el-button class="view-all" type="text" icon="el-icon-arrow-right">Ver todos</el-button>
             </div>
-                <el-row :gutter="0">
-                  <el-col v-for="item in Categorias" :span="5">
-                    <CardCategoria :nome="item.nome" :quantidade="item.quantidade"></CardCategoria>
-                  </el-col>
+                  <el-row :gutter="1">
+                    <el-col v-for="item in Categorias" :span="4 " style="margin-bottom: 25px;">
+                      <CardCategoria :nome="item.nome" :quantidade="item.quantidade"></CardCategoria>
+                    </el-col>
 
                 <!-- Aqui você irá percorrer cada produto que vier do Backend -->
             </el-row>
