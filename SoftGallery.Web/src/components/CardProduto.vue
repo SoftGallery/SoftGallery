@@ -1,6 +1,6 @@
 <template>
 <el-card v-if="tipo == 'destaque' "
-  style="width: 210px; height: auto; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;"
+  style="width: 180px; height: auto; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;"
   :body-style="{ padding: '0px' }"
 >
   <div style="display: flex; justify-content: center; align-items: center; position: relative; height: 150px;">
@@ -13,7 +13,7 @@
   </div>
 
   <div style="padding: 10px;">
-    <div style="font-size: 15px; font-weight: bold;">{{ nome }}</div>
+    <div class="card-titulo" style="font-size: 15px; font-weight: bold; ">{{ nome }}</div>
     <div style="margin-top: 6px;">
       <i class="fa-solid fa-star" style="color: #FFDE59;"></i>
       {{ avalicao }}
@@ -31,7 +31,7 @@
   </div>
 </el-card>
 
-<el-card v-if="tipo == 'novidade'" style="width: 210px; height: auto; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;"
+<el-card v-if="tipo == 'novidade'" style="width: 180px; height: auto; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;"
   :body-style="{ padding: '0px' }"
 >
 <div style="display: flex; justify-content: center; align-items: center; position: relative; height: 150px;">
@@ -44,7 +44,7 @@
   </div>
 
   <div style="padding: 10px;">
-    <div style="font-size: 15px; font-weight: bold;">{{ nome }}</div>
+    <div class="card-titulo" style="font-size: 15px; font-weight: bold;">{{ nome }}</div>
     <div style="margin-top: 6px;">
       <i class="fa-solid fa-star" style="color: #FFDE59;"></i>
       {{ avalicao }}
@@ -124,5 +124,9 @@ export default {
   text-decoration: line-through;
   color: #aaa;
 }
+.card-titulo{
+  text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+}
+
 
 </style>
