@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import CardProduto from '../components/CardProduto.vue';
 import Section from '../components/Section.vue';
+import Footer from '../components/Footer.vue';
 
 
 </script>
@@ -50,6 +51,8 @@ import Section from '../components/Section.vue';
   <Section type="categorias"></Section>
   <Section type="destaques"></Section>
   <Section type="novidades"></Section>
+  <Footer></Footer>
+
 </template>
 
 
