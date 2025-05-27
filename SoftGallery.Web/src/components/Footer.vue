@@ -3,7 +3,7 @@
     <div class="footer_content">
       <div class="contacts">
         <h1>Logo</h1>
-        <p>It´s all about your dreams</p>
+        <p class="SoftGallery">Soft Gallery</p>
 
         <div id="footer_social_media">
           <a href="#" class="footer-link" id="instagram">
@@ -19,16 +19,16 @@
       </div>
 
       <ul class="footer_list">
-        <li><h3>Blog</h3></li>
-        <li><a href="#" class="footer-link">Tech</a></li>
-        <li><a href="#" class="footer-link">Adventures</a></li>
-        <li><a href="#" class="footer-link">Music</a></li>
+        <li><h3>Paginas</h3></li>
+        <li><a href="#novidades-section" class="footer-link">Novidades</a></li>
+        <li><a href="#destaques" class="footer-link">Destaques</a></li>
+        <li><a href="#categorias" class="footer-link">Categorias</a></li>
       </ul>
 
       <ul class="footer_list">
         <li><h3>Products</h3></li>
-        <li><a href="#" class="footer-link">App</a></li>
-        <li><a href="#" class="footer-link">Desktop</a></li>
+        <li><a href="#principal-container" class="footer-link">Ofertas</a></li>
+        <li><a href="#colecao" class="footer-link">Coleção</a></li>
         <li><a href="#" class="footer-link">Cloud</a></li>
       </ul>
     </div>
@@ -161,5 +161,9 @@ footer {
   #footer_social_media {
     justify-content: center;
   }
+}
+.SoftGallery{
+    color: #5f9fe9;
+    font-size: 30px;
 }
 </style>

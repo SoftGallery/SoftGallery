@@ -1,5 +1,5 @@
 <template>
-    <section v-if="type == 'novidades'" class="novidades-section">
+    <section v-if="type == 'novidades'" id= "novidades-section"class="novidades-section">
         <div class="container">
             <div class="header">
                 <div class="header-text">
@@ -33,7 +33,7 @@
               </div>
             </div>
         </section>
-        <section v-if="type == 'destaques'" class="novidades-section">
+        <section v-if="type == 'destaques'" id="destaques"class="novidades-section">
         <div class="container">
             <div class="header">
                 <div class="header-text">
@@ -55,7 +55,7 @@
             </el-row>
         </div>
         </section>
-        <section v-if="type == 'categorias'">
+        <section v-if="type == 'categorias'" id="categorias">
           <div class="container">
             <div class="header">
                 <div class="header-text">

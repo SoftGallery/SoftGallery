@@ -7,11 +7,11 @@ import Footer from '../components/Footer.vue';
 </script>
 
 <template>
-  <div class="container-principal" style="padding: 64px 64px;">
+  <div id="principal-container"class="container-principal" style="padding: 64px 64px;">
     <div style="display: flex; flex-direction: row; gap: 3rem; justify-content: space-between;">
       <div style="display: flex; flex-direction: column; justify-content: center;">
         <div>
-          <h1 style="font-weight: bold; font-size: 48px; color: silver;">Ofertas Especiais de Verão</h1>
+          <h1  style="font-weight: bold; font-size: 48px; color: silver;">Ofertas Especiais de Verão</h1>
           <p style="padding-top: 8px; color: gray; font-size: 16px;">Descubra nossa nova coleção com até 40% de desconto.<br> Produtos exclusivos para você aproveitar o verão com estilo.</p>
         </div>
         <div style="margin-top: 16px;">
@@ -58,17 +58,22 @@ import Footer from '../components/Footer.vue';
 
 <style>
 .container-principal{
-  background: linear-gradient(135deg, #235997, #081124);
+  background: linear-gradient(-70deg, #235997, #0f2350,  #3b38e6, #3e035a9d);
   background-size: 400% 400%;
-  animation: gradientMove 15s ease infinite;
+  animation: gradient 15s ease infinite;
 
 }
 
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-
 </style>
 
