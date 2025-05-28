@@ -27,6 +27,7 @@
     <el-main>
       <router-view />
     </el-main>
+    <Footer></Footer>
   </el-container>
   <BarraLateral v-if="modoAdm"/>
 </template>
@@ -40,7 +41,7 @@ import BarraDePesquisa from './components/BarraDePesquisa.vue';
 import CartButton from './components/CartButton.vue';
 import BarraLateral from './components/BarraLateral.vue'
 import Logo from './assets/Logo.vue'
-
+import Footer from './components/Footer.vue'
 const route = useRoute();
 
 // Lista de rotas que são consideradas como "modo administrador"
