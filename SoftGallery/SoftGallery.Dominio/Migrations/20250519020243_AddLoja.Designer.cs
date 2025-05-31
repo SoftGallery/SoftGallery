@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftGallery.Dominio;
 
@@ -11,9 +12,11 @@ using SoftGallery.Dominio;
 namespace SoftGallery.Dominio.Migrations
 {
     [DbContext(typeof(SoftGalleryDominioDbContext))]
-    partial class SoftGalleryDominioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250519020243_AddLoja")]
+    partial class AddLoja
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,9 +98,6 @@ namespace SoftGallery.Dominio.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ImagemURL")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Nome")

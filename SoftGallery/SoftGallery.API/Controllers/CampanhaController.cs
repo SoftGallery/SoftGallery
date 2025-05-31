@@ -17,14 +17,14 @@ namespace SoftGallery.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Campanha>> GetCampanhas([FromQuery] bool? ativas = false)
+        public ActionResult<IEnumerable<ResumoCampanhaDTO>> GetCampanhas([FromQuery] bool? ativas = false)
         {
             var campanhas = service.ListarCampanhas(ativas.GetValueOrDefault());
             return Ok(campanhas);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Campanha> GetCampanha(string id)
+        public ActionResult<ProdutosCampanhaDTO> GetCampanha(string id)
         {
             var campanha = service.RetornarCampanha(id);
             if (campanha == null)

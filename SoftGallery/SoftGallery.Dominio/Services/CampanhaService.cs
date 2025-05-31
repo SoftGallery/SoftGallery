@@ -13,7 +13,7 @@ namespace SoftGallery.Dominio.Services
             this.dbContext = dbContext;
         }
 
-        public List<Campanha> ListarCampanhas(bool somenteAtivas = false)
+        public List<ResumoCampanhaDTO> ListarCampanhas(bool somenteAtivas = false)
         {
             IQueryable<Campanha> query = dbContext
                                     .Campanhas
@@ -25,15 +25,38 @@ namespace SoftGallery.Dominio.Services
                 query = query.Where(c => c.DataInicio <= DateTime.Now && c.DataFim >= DateTime.Now);
             }
 
-            return query.ToList();
+            IQueryable<ResumoCampanhaDTO> campanhasDto = query.Select(c => new ResumoCampanhaDTO
+            {
+                Id = c.Id,
+                Nome = c.Nome,
+                DataInicio = c.DataInicio,
+                DataFim = c.DataFim
+            });
+
+            return campanhasDto.ToList();
         }
 
-        public Campanha? RetornarCampanha(string id)
+        public ProdutosCampanhaDTO RetornarCampanha(string id)
         {
-            return dbContext
+            var campanha = dbContext
                 .Campanhas
                 .Include(c => c.Produtos)
                 .FirstOrDefault(c => c.Id == id);
+
+            if (campanha == null)
+                return new ProdutosCampanhaDTO();
+
+            ProdutosCampanhaDTO produtosCampanha = new ProdutosCampanhaDTO
+            {
+                Produtos = campanha.Produtos.Select(p => new ResumoProdutoDTO
+                {
+                    Id = p.Id,
+                    Nome = p.Nome,
+                    Preco = p.Preco
+                }).ToList()
+            };
+
+            return produtosCampanha;
         }
 
         public Campanha CriarCampanha(CampanhaDTO campanhaDto)

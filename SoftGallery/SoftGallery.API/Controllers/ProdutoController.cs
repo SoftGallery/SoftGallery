@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoftGallery.Dominio.DTO;
+using SoftGallery.Dominio.Exceptions;
 using SoftGallery.Dominio.Models;
 using SoftGallery.Dominio.Services;
 
@@ -17,16 +18,16 @@ namespace SoftGallery.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Produto>> GetProdutos([FromQuery] string? ordenarPor = null, [FromQuery] string? direcao = "asc")
+        public ActionResult<IEnumerable<ResumoProdutoDTO>> GetProdutos([FromQuery] string? ordenarPor = null, [FromQuery] string? direcao = "asc")
         {
-            List<Produto> produtos = service.ListarProdutos(ordenarPor, direcao);
+            List<ResumoProdutoDTO> produtos = service.ListarProdutos(ordenarPor, direcao);
             return Ok(produtos);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<Produto>> GetProduto(string id)
+        public ActionResult<IEnumerable<ProdutoDTO>> GetProduto(string id)
         {
-            Produto? produto = service.RetornaProduto(id);
+            ProdutoDTO? produto = service.RetornaProduto(id);
 
             if (produto is null)
             {
@@ -37,10 +38,28 @@ namespace SoftGallery.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Produto> CreateProduto([FromBody] ProdutoDTO novoProdutoDTO)
+        public ActionResult<ProdutoDTO> CreateProduto([FromBody] ProdutoDTO novoProdutoDTO)
         {
-            Produto produto = service.CriarProduto(novoProdutoDTO);
+            ProdutoDTO produto = service.CriarProduto(novoProdutoDTO);
             return CreatedAtAction(nameof(CreateProduto), produto);
+        }
+
+        [HttpPost("{id}/Upload")]
+        public async Task<ActionResult<Produto>> UploadImage(string id, IFormFile arquivo)
+        {
+            try
+            {
+                var produto = await service.UploadImage(id, arquivo);
+                return Ok(produto);
+            }
+            catch (ProdutoInexistente ex)
+            {
+                return NotFound(new { erro = ex.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { erro = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]

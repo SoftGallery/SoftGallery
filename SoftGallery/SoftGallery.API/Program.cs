@@ -18,6 +18,9 @@ namespace SoftGallery.API
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<SoftGalleryDominioDbContext>();
 
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddScoped<UrlServico>();
             builder.Services.AddTransient<ProdutoService>();
             builder.Services.AddTransient<CampanhaService>();
 
@@ -31,6 +34,8 @@ namespace SoftGallery.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
