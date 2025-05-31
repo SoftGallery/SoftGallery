@@ -3,6 +3,7 @@ using SoftGallery.Dominio.DTO;
 using SoftGallery.Dominio.Exceptions;
 using SoftGallery.Dominio.Models;
 using SoftGallery.Dominio.Services;
+using static SoftGallery.Dominio.DTO.ProdutoDTO;
 
 namespace SoftGallery.API.Controllers
 {
@@ -27,7 +28,7 @@ namespace SoftGallery.API.Controllers
         [HttpGet("{id}")]
         public ActionResult<IEnumerable<ProdutoDTO>> GetProduto(string id)
         {
-            ProdutoDTO? produto = service.RetornaProduto(id);
+            ProdutoDTOListagem? produto = service.RetornaProduto(id);
 
             if (produto is null)
             {
@@ -38,9 +39,9 @@ namespace SoftGallery.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ProdutoDTO> CreateProduto([FromBody] ProdutoDTO novoProdutoDTO)
+        public ActionResult<ProdutoDTOListagem> CreateProduto([FromBody] ProdutoDTOListagem novoProdutoDTO)
         {
-            ProdutoDTO produto = service.CriarProduto(novoProdutoDTO);
+            ProdutoDTOListagem produto = service.CriarProduto(novoProdutoDTO);
             return CreatedAtAction(nameof(CreateProduto), produto);
         }
 
@@ -49,10 +50,10 @@ namespace SoftGallery.API.Controllers
         {
             try
             {
-                var produto = await service.UploadImage(id, arquivo);
+                Produto produto = await service.UploadImage(id, arquivo);
                 return Ok(produto);
             }
-            catch (ProdutoInexistente ex)
+            catch (RecursoNaoEncontradoException ex)
             {
                 return NotFound(new { erro = ex.Message });
             }
@@ -63,7 +64,7 @@ namespace SoftGallery.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateProduto(string id, ProdutoDTO updateProduto)
+        public IActionResult UpdateProduto(string id, ProdutoDTOListagem updateProduto)
         {
             bool editProduct = service.EditarProduto(id, updateProduto);
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using SoftGallery.Dominio.DTO;
 using SoftGallery.Dominio.Exceptions;
 using SoftGallery.Dominio.Models;
+using static SoftGallery.Dominio.DTO.ProdutoDTO;
 
 namespace SoftGallery.Dominio.Services
 {
@@ -45,12 +45,12 @@ namespace SoftGallery.Dominio.Services
             return produtosDTO;
         }
 
-        public ProdutoDTO RetornaProduto(string id)
+        public ProdutoDTOListagem RetornaProduto(string id)
         {
             Produto? produto = dbContext
                 .Produtos
                 .FirstOrDefault(p => p.Id == id);
-            ProdutoDTO produtoDTO = new ProdutoDTO
+            ProdutoDTOListagem produtoDTO = new ProdutoDTOListagem
             {
                 nome = produto?.Nome ?? string.Empty,
                 descricao = produto?.Descricao ?? string.Empty,
@@ -60,13 +60,13 @@ namespace SoftGallery.Dominio.Services
             return produtoDTO;
         }
 
-        public ProdutoDTO CriarProduto(ProdutoDTO produto)
+        public ProdutoDTOListagem CriarProduto(ProdutoDTOListagem produto)
         {
             Produto novoProduto = new Produto(produto.nome, produto.preco, produto.descricao, produto.imagemUrl);
 
             dbContext.Produtos.Add(novoProduto);
             dbContext.SaveChanges();
-            ProdutoDTO novoProdutoDTO = new ProdutoDTO
+            ProdutoDTOListagem novoProdutoDTO = new ProdutoDTOListagem
             {
                 nome = novoProduto.Nome,
                 descricao = novoProduto.Descricao,
@@ -76,7 +76,7 @@ namespace SoftGallery.Dominio.Services
             return novoProdutoDTO;
         }
 
-        public bool EditarProduto(string id, ProdutoDTO produto)
+        public bool EditarProduto(string id, ProdutoDTOListagem produto)
         {
             Produto? produtoEncontrado =
                 dbContext
@@ -109,7 +109,7 @@ namespace SoftGallery.Dominio.Services
 
             if (produto is null)
             {
-                throw new ProdutoInexistente("Produto inexistente.");
+                throw new RecursoNaoEncontradoException("Produto inexistente.");
             }
 
             string extensaoArquivo = arquivo.FileName.Substring(arquivo.FileName.LastIndexOf(".") + 1);

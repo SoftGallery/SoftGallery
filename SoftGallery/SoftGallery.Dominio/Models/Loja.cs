@@ -15,12 +15,11 @@ namespace SoftGallery.Dominio.Models
         public string Descricao { get; set; }
 
         public string? Endereco { get; set; }
+        public string? ImagemURL { get; set; }
 
         [EmailAddress]
         public string? Email { get; set; }
 
-        // Redes sociais
-        [Url]
         public string? Whatsapp { get; set; }
 
         [Url]
@@ -44,7 +43,8 @@ namespace SoftGallery.Dominio.Models
             string? facebook = null,
             string? instagram = null,
             string? tiktok = null,
-            string? x = null
+            string? x = null,
+            string? imagemUrl = null
         )
         {
             this.Nome = nome;
@@ -56,6 +56,7 @@ namespace SoftGallery.Dominio.Models
             this.Instagram = instagram;
             this.TikTok = tiktok;
             this.X = x;
+            this.ImagemURL = imagemUrl;
         }
 
         private Loja() { }

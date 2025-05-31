@@ -1,16 +1,22 @@
 ﻿using SoftGallery.Dominio.Models;
 using SoftGallery.Dominio.DTO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using SoftGallery.Dominio.Exceptions;
+using static SoftGallery.Dominio.DTO.CampanhaDTO;
+using static SoftGallery.Dominio.DTO.ProdutoDTO;
 
 namespace SoftGallery.Dominio.Services
 {
     public class CampanhaService
     {
         private readonly SoftGalleryDominioDbContext dbContext;
+        private readonly UrlServico servicoUrl;
 
-        public CampanhaService(SoftGalleryDominioDbContext dbContext)
+        public CampanhaService(SoftGalleryDominioDbContext dbContext, UrlServico servicoUrl)
         {
             this.dbContext = dbContext;
+            this.servicoUrl = servicoUrl;
         }
 
         public List<ResumoCampanhaDTO> ListarCampanhas(bool somenteAtivas = false)
@@ -25,18 +31,18 @@ namespace SoftGallery.Dominio.Services
                 query = query.Where(c => c.DataInicio <= DateTime.Now && c.DataFim >= DateTime.Now);
             }
 
-            IQueryable<ResumoCampanhaDTO> campanhasDto = query.Select(c => new ResumoCampanhaDTO
+            List<ResumoCampanhaDTO> campanhaDTO = query.Select(c => new ResumoCampanhaDTO
             {
                 id = c.Id,
                 nome = c.Nome,
-                dataInicio = c.DataInicio,
-                dataFim = c.DataFim
-            });
+                imagemURL = c.ImagemURL ?? string.Empty,
+            }).ToList();
 
-            return campanhasDto.ToList();
+
+            return campanhaDTO;
         }
 
-        public ProdutosCampanhaDTO RetornarCampanha(string id)
+        public ProdutosCampanhaDTO RetornarProdutosCampanha(string id)
         {
             var campanha = dbContext
                 .Campanhas
@@ -50,25 +56,40 @@ namespace SoftGallery.Dominio.Services
             {
                 produtos = campanha.Produtos.Select(p => new ResumoProdutoDTO
                 {
-                    Id = p.Id,
-                    Nome = p.Nome,
-                    Preco = p.Preco
+                    id = p.Id,
+                    nome = p.Nome,
+                    preco = p.Preco,
+                    imagemUrl = p.ImagemURL ?? string.Empty
                 }).ToList()
             };
 
             return produtosCampanha;
         }
 
-        public Campanha CriarCampanha(CampanhaDTO campanhaDto)
+        public Campanha RetornarCampanha(string id)
+        {
+            var campanha = dbContext
+                .Campanhas
+                .Include(c => c.Produtos)
+                .FirstOrDefault(c => c.Id == id);
+
+            if (campanha == null)
+                throw new RecursoNaoEncontradoException("Campanha não encontrada.");
+
+            return campanha;
+        }
+
+
+        public Campanha CriarCampanha(CampanhaDTOInput campanhaDto)
         {
             var produtos = dbContext.Produtos
-                .Where(p => campanhaDto.ProdutoIds.Contains(p.Id))
+                .Where(p => campanhaDto.produtoIds.Contains(p.Id))
                 .ToList();
 
             var novaCampanha = new Campanha(
-                campanhaDto.Nome,
-                campanhaDto.DataInicio,
-                campanhaDto.DataFim,
+                campanhaDto.nome,
+                campanhaDto.dataInicio,
+                campanhaDto.dataFim,
                 produtos
             );
 
@@ -78,7 +99,47 @@ namespace SoftGallery.Dominio.Services
             return novaCampanha;
         }
 
-        public bool EditarCampanha(string id, CampanhaDTO campanhaDto)
+        public async Task<Campanha> UploadImage(string id, IFormFile arquivo)
+        {
+            if (arquivo == null || arquivo.Length == 0)
+            {
+                throw new ArgumentException("Arquivo inválido ou vazio.");
+            }
+
+            Campanha? campanha = dbContext
+                .Campanhas
+                .FirstOrDefault(p => p.Id == id);
+
+            if (campanha is null)
+            {
+                throw new RecursoNaoEncontradoException("Campanha inexistente.");
+            }
+
+            string extensaoArquivo = arquivo.FileName.Substring(arquivo.FileName.LastIndexOf(".") + 1);
+
+            string nomePasta = "campanhas";
+            string caminhoDaPastaDeUploads = Path.Combine("wwwroot", nomePasta);
+            Directory.CreateDirectory(caminhoDaPastaDeUploads);
+
+            string nomeDoArquivo = $"{id}.{extensaoArquivo}";
+            string caminhoDoArquivo = Path.Combine(caminhoDaPastaDeUploads, nomeDoArquivo);
+
+            using (var stream = new FileStream(caminhoDoArquivo, FileMode.Create))
+            {
+                await arquivo.CopyToAsync(stream);
+            }
+
+            string urlServidor = servicoUrl.ObterUrlServidor();
+
+            string imagemUrl = $"{urlServidor}/{nomePasta}/{nomeDoArquivo}";
+
+            campanha.ImagemURL = imagemUrl;
+            dbContext.SaveChanges();
+
+            return campanha;
+        }
+
+        public bool EditarCampanha(string id, CampanhaDTOInput campanhaDto)
         {
             var campanha = dbContext.Campanhas
                 .Include(c => c.Produtos)
@@ -87,12 +148,12 @@ namespace SoftGallery.Dominio.Services
             if (campanha == null)
                 return false;
 
-            campanha.Nome = campanhaDto.Nome;
-            campanha.DataInicio = campanhaDto.DataInicio;
-            campanha.DataFim = campanhaDto.DataFim;
+            campanha.Nome = campanhaDto.nome;
+            campanha.DataInicio = campanhaDto.dataInicio;
+            campanha.DataFim = campanhaDto.dataFim;
 
             campanha.Produtos = dbContext.Produtos
-                .Where(p => campanhaDto.ProdutoIds.Contains(p.Id))
+                .Where(p => campanhaDto.produtoIds.Contains(p.Id))
                 .ToList();
 
             dbContext.SaveChanges();

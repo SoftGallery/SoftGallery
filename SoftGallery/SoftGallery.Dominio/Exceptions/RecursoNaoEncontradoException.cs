@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SoftGallery.Dominio.Exceptions
 {
-    public class ProdutoInexistente : Exception
+    public class RecursoNaoEncontradoException : Exception
     {
-        public ProdutoInexistente(string message) : base(message) { }
+        public RecursoNaoEncontradoException(string message) : base(message) { }
     }
 }

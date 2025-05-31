@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftGallery.Dominio;
 
@@ -11,9 +12,11 @@ using SoftGallery.Dominio;
 namespace SoftGallery.Dominio.Migrations
 {
     [DbContext(typeof(SoftGalleryDominioDbContext))]
-    partial class SoftGalleryDominioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250531152325_AjustesAddImagesCampanhas")]
+    partial class AjustesAddImagesCampanhas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,33 +51,6 @@ namespace SoftGallery.Dominio.Migrations
                     b.ToTable("Campanhas");
                 });
 
-            modelBuilder.Entity("SoftGallery.Dominio.Models.Cliente", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("CPF")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Senha")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Clientes");
-                });
-
             modelBuilder.Entity("SoftGallery.Dominio.Models.Loja", b =>
                 {
                     b.Property<string>("Id")
@@ -92,9 +68,6 @@ namespace SoftGallery.Dominio.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Facebook")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ImagemURL")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Instagram")

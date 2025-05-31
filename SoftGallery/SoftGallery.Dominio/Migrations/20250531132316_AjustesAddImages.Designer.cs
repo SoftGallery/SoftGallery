@@ -12,8 +12,8 @@ using SoftGallery.Dominio;
 namespace SoftGallery.Dominio.Migrations
 {
     [DbContext(typeof(SoftGalleryDominioDbContext))]
-    [Migration("20250531123003_AjustesProdutosImage")]
-    partial class AjustesProdutosImage
+    [Migration("20250531132316_AjustesAddImages")]
+    partial class AjustesAddImages
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,9 @@ namespace SoftGallery.Dominio.Migrations
 
                     b.Property<DateTime>("DataInicio")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ImagemURL")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Nome")
                         .IsRequired()
