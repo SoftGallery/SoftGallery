@@ -2,6 +2,6 @@
 {
     public class ProdutosCampanhaDTO
     {
-        public List<ResumoProdutoDTO> Produtos { get; set; }
+        public List<ResumoProdutoDTO> produtos { get; set; }
     }
 }

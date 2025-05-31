@@ -12,6 +12,7 @@ namespace SoftGallery.Dominio.Models
         public string Nome { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
+        public string? ImagemURL { get; set; }
         public List<Produto> Produtos { get; set; }
 
         [NotMapped]
@@ -24,12 +25,13 @@ namespace SoftGallery.Dominio.Models
             }
         }
 
-        public Campanha(string nome, DateTime dataInicio, DateTime dataFim, List<Produto>? produtos = null)
+        public Campanha(string nome, DateTime dataInicio, DateTime dataFim, List<Produto>? produtos = null, string? imageUrl = null)
         {
             this.Nome = nome;
             this.DataInicio = dataInicio;
             this.DataFim = dataFim;
             this.Produtos = produtos ?? [];
+            this.ImagemURL = imageUrl;
         }
 
         private Campanha() { }

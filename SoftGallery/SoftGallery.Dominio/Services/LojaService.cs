@@ -24,28 +24,28 @@ namespace SoftGallery.Dominio.Services
             if (config == null)
             {
                 // Cadastrar nova
-                config = new Loja(dto.Nome, dto.Descricao, dto.Endereco, dto.Email)
+                config = new Loja(dto.nome, dto.descricao, dto.endereco, dto.email)
                 {
-                    Whatsapp = dto.Whatsapp,
-                    Facebook = dto.Facebook,
-                    Instagram = dto.Instagram,
-                    TikTok = dto.TikTok,
-                    X = dto.X
+                    Whatsapp = dto.whatsapp,
+                    Facebook = dto.facebook,
+                    Instagram = dto.instagram,
+                    TikTok = dto.tikTok,
+                    X = dto.x
                 };
 
                 dbContext.Loja.Add(config);
             }
             else
             {
-                config.Nome = dto.Nome;
-                config.Descricao = dto.Descricao;
-                config.Endereco = dto.Endereco;
-                config.Email = dto.Email;
-                config.Whatsapp = dto.Whatsapp;
-                config.Facebook = dto.Facebook;
-                config.Instagram = dto.Instagram;
-                config.TikTok = dto.TikTok;
-                config.X = dto.X;
+                config.Nome = dto.nome;
+                config.Descricao = dto.descricao;
+                config.Endereco = dto.endereco;
+                config.Email = dto.email;
+                config.Whatsapp = dto.whatsapp;
+                config.Facebook = dto.facebook;
+                config.Instagram = dto.instagram;
+                config.TikTok = dto.tikTok;
+                config.X = dto.x;
             }
 
             dbContext.SaveChanges();

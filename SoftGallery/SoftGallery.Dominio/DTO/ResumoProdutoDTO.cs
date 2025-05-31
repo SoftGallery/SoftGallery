@@ -2,9 +2,9 @@
 {
     public class ResumoProdutoDTO
     {
-        public string Id { get; set; }
-        public string Nome { get; set; }
+        public string id { get; set; }
+        public string nome { get; set; }
         public string? imagemUrl { get; set; }
-        public decimal Preco { get; set; }
+        public decimal preco { get; set; }
     }
 }

@@ -36,9 +36,9 @@ namespace SoftGallery.Dominio.Services
 
             var produtosDTO = query.Select(p => new ResumoProdutoDTO
             {
-                Id = p.Id,
-                Nome = p.Nome,
-                Preco = p.Preco,
+                id = p.Id,
+                nome = p.Nome,
+                preco = p.Preco,
                 imagemUrl = p.ImagemURL ?? string.Empty
             }).ToList();
 
@@ -52,9 +52,9 @@ namespace SoftGallery.Dominio.Services
                 .FirstOrDefault(p => p.Id == id);
             ProdutoDTO produtoDTO = new ProdutoDTO
             {
-                Nome = produto?.Nome ?? string.Empty,
-                Descricao = produto?.Descricao ?? string.Empty,
-                Preco = produto?.Preco ?? 0,
+                nome = produto?.Nome ?? string.Empty,
+                descricao = produto?.Descricao ?? string.Empty,
+                preco = produto?.Preco ?? 0,
                 imagemUrl = produto?.ImagemURL ?? string.Empty
             };
             return produtoDTO;
@@ -62,16 +62,16 @@ namespace SoftGallery.Dominio.Services
 
         public ProdutoDTO CriarProduto(ProdutoDTO produto)
         {
-            Produto novoProduto = new Produto(produto.Nome, produto.Preco, produto.Descricao, produto.imagemUrl);
+            Produto novoProduto = new Produto(produto.nome, produto.preco, produto.descricao, produto.imagemUrl);
 
             dbContext.Produtos.Add(novoProduto);
             dbContext.SaveChanges();
             ProdutoDTO novoProdutoDTO = new ProdutoDTO
             {
-                Nome = novoProduto.Nome,
-                Descricao = novoProduto.Descricao,
+                nome = novoProduto.Nome,
+                descricao = novoProduto.Descricao,
                 imagemUrl = novoProduto.ImagemURL,
-                Preco = novoProduto.Preco
+                preco = novoProduto.Preco
             };
             return novoProdutoDTO;
         }
@@ -88,9 +88,9 @@ namespace SoftGallery.Dominio.Services
                 return false;
             }
 
-            produtoEncontrado.Nome = produto.Nome;
-            produtoEncontrado.Descricao = produto.Descricao;
-            produtoEncontrado.Preco = produto.Preco;
+            produtoEncontrado.Nome = produto.nome;
+            produtoEncontrado.Descricao = produto.descricao;
+            produtoEncontrado.Preco = produto.preco;
             produtoEncontrado.ImagemURL = produto.imagemUrl;
             dbContext.SaveChanges();
             return true;

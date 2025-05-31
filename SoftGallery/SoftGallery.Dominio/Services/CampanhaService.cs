@@ -27,10 +27,10 @@ namespace SoftGallery.Dominio.Services
 
             IQueryable<ResumoCampanhaDTO> campanhasDto = query.Select(c => new ResumoCampanhaDTO
             {
-                Id = c.Id,
-                Nome = c.Nome,
-                DataInicio = c.DataInicio,
-                DataFim = c.DataFim
+                id = c.Id,
+                nome = c.Nome,
+                dataInicio = c.DataInicio,
+                dataFim = c.DataFim
             });
 
             return campanhasDto.ToList();
@@ -48,7 +48,7 @@ namespace SoftGallery.Dominio.Services
 
             ProdutosCampanhaDTO produtosCampanha = new ProdutosCampanhaDTO
             {
-                Produtos = campanha.Produtos.Select(p => new ResumoProdutoDTO
+                produtos = campanha.Produtos.Select(p => new ResumoProdutoDTO
                 {
                     Id = p.Id,
                     Nome = p.Nome,

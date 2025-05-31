@@ -3,15 +3,15 @@ namespace SoftGallery.Dominio.DTO
 {
     public class LojaDTO
     {
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
-        public string? Endereco { get; set; }
-        public string? Email { get; set; }
+        public string nome { get; set; }
+        public string descricao { get; set; }
+        public string? endereco { get; set; }
+        public string? email { get; set; }
 
-        public string? Whatsapp { get; set; }
-        public string? Facebook { get; set; }
-        public string? Instagram { get; set; }
-        public string? TikTok { get; set; }
-        public string? X { get; set; }
+        public string? whatsapp { get; set; }
+        public string? facebook { get; set; }
+        public string? instagram { get; set; }
+        public string? tikTok { get; set; }
+        public string? x { get; set; }
     }
 }

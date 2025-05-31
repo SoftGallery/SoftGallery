@@ -2,12 +2,12 @@
 {
     public class ResumoCampanhaDTO
     {
-        public string Id { get; set; }
-        public string Nome { get; set; }
+        public string id { get; set; }
+        public string nome { get; set; }
 
-        public DateTime DataInicio { get; set; }
+        public DateTime dataInicio { get; set; }
 
-        public DateTime DataFim { get; set; }
+        public DateTime dataFim { get; set; }
 
     }
 }

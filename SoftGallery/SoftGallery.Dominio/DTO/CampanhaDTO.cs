@@ -7,6 +7,7 @@
         public DateTime DataInicio { get; set; }
 
         public DateTime DataFim { get; set; }
+        public string? ImagemURL { get; set; }
 
         public List<string> ProdutoIds { get; set; }
     }
