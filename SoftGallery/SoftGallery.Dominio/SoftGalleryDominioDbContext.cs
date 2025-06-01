@@ -12,6 +12,7 @@ public partial class SoftGalleryDominioDbContext : DbContext
     public DbSet<Campanha> Campanhas { get; set; }
     public DbSet<Loja> Loja { get; set; }
     public DbSet<Cliente> Clientes { get; set; }
+    public DbSet<Pedido> Pedidos { get; set; }
 
     public SoftGalleryDominioDbContext()
     {

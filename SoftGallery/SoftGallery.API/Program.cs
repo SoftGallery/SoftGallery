@@ -31,6 +31,8 @@ namespace SoftGallery.API
             builder.Services.AddScoped<LojaService>();
             builder.Services.AddTransient<ProdutoService>();
             builder.Services.AddTransient<CampanhaService>();
+            builder.Services.AddTransient<PedidoService>();
+            builder.Services.AddTransient<WhatsAppService>();
             builder.Services.AddTransient<AuthService>();
 
             builder.Services.AddSwaggerGen(c =>
