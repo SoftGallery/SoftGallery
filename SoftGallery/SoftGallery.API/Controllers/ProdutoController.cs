@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SoftGallery.Dominio.DTO;
 using SoftGallery.Dominio.Exceptions;
 using SoftGallery.Dominio.Models;
 using SoftGallery.Dominio.Services;
@@ -26,9 +25,9 @@ namespace SoftGallery.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<ProdutoDTO>> GetProduto(string id)
+        public ActionResult<IEnumerable<Produto>> GetProduto(string id)
         {
-            ProdutoDTOListagem? produto = service.RetornaProduto(id);
+            Produto? produto = service.RetornaProduto(id);
 
             if (produto is null)
             {
