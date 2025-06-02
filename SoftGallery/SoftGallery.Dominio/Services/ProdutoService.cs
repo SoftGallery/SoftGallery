@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using SoftGallery.Dominio.Exceptions;
 using SoftGallery.Dominio.Models;
 using static SoftGallery.Dominio.DTO.ProdutoDTO;
@@ -46,19 +45,12 @@ namespace SoftGallery.Dominio.Services
             return produtosDTO;
         }
 
-        public ProdutoDTOListagem RetornaProduto(string id)
+        public Produto? RetornaProduto(string id)
         {
             Produto? produto = dbContext
                 .Produtos
                 .FirstOrDefault(p => p.Id == id);
-            ProdutoDTOListagem produtoDTO = new ProdutoDTOListagem
-            {
-                nome = produto?.Nome ?? string.Empty,
-                descricao = produto?.Descricao ?? string.Empty,
-                preco = produto?.Preco ?? 0,
-                imagemUrl = produto?.ImagemURL ?? string.Empty
-            };
-            return produtoDTO;
+            return produto;
         }
 
         public ProdutoDTOListagem CriarProduto(ProdutoDTOListagem produto)
