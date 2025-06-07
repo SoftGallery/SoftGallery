@@ -26,7 +26,7 @@
 
     <el-main>
       <div>
-        <router-view class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 min-h-screen" />
+        <router-view class="min-h-screen" />
       </div>
       
     </el-main>
