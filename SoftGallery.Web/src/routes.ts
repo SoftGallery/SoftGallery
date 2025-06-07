@@ -5,6 +5,7 @@ import LoginAdm from "./pages/LoginAdm.vue"
 import Produto from "./pages/Produto.vue"
 import Produtos from './pages/Produtos.vue'
 import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs'
+import Carrinho from './pages/Carrinho.vue'
 
 
 const routes = [
@@ -12,7 +13,8 @@ const routes = [
   { path: '/login-adm', component: LoginAdm },
   { path: '/contato', component: LoginAdm },
   { path: '/produto', component: Produto },
-  {path: '/produtos', component: Produtos}
+  {path: '/produtos', component: Produtos},
+  {path: '/carrinho', component: Carrinho}
 ]
 
 const router = createRouter({

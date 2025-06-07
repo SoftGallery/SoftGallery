@@ -25,9 +25,11 @@
     </el-header>
 
     <el-main>
-      <router-view />
+      <div>
+        <router-view class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 min-h-screen" />
+      </div>
+      
     </el-main>
-    <Footer></Footer>
   </el-container>
   <BarraLateral v-if="modoAdm"/>
 </template>
