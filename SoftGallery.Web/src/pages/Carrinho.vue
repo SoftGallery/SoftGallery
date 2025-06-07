@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-else="carrinho.length" class="bg-gray-100 shadow-white/50 shadow-md rounded-3xl border border-white/20 col-span-2  overflow-hidden ">
+                <div v-else="carrinho.length" class="bg-gray-100 shadow-lg rounded-3xl border border-white/20 col-span-2  overflow-hidden ">
                     <div class="p-16 flex flex-col items-center">
                         <div class="bg-purple-100 rounded-full p-12 text-center mb-8">
                             <i class="fa-solid fa-cart-shopping text-8xl text-purple-400"></i>
