@@ -18,7 +18,7 @@
           <div class="interacoes">
             <barra-de-pesquisa></barra-de-pesquisa>
             <heart-button></heart-button>
-            <cart-button></cart-button>
+            <router-link class="flex justify-center" to="/carrinho"><cart-button></cart-button></router-link>
           </div>
         </el-menu-item>
       </el-menu>
