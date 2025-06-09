@@ -6,6 +6,7 @@ import Produto from "./pages/Produto.vue"
 import Produtos from './pages/Produtos.vue'
 import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs'
 import Carrinho from './pages/Carrinho.vue'
+import Agradecimento from './pages/Agradecimento.vue'
 
 
 const routes = [
@@ -14,7 +15,8 @@ const routes = [
   { path: '/contato', component: LoginAdm },
   { path: '/produto', component: Produto },
   {path: '/produtos', component: Produtos},
-  {path: '/carrinho', component: Carrinho}
+  {path: '/carrinho', component: Carrinho},
+  {path: '/agradecimento', component: Agradecimento}
 ]
 
 const router = createRouter({
