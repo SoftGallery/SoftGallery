@@ -55,9 +55,9 @@ namespace SoftGallery.API.Controllers
 
 
     [HttpPost]
-        public ActionResult<ProdutoDTOListagem> CreateProduto([FromBody] ProdutoDTOListagem novoProdutoDTO)
+        public ActionResult<Produto> CreateProduto([FromBody] ProdutoDTOListagem novoProdutoDTO)
         {
-            ProdutoDTOListagem produto = service.CriarProduto(novoProdutoDTO);
+            Produto produto = service.CriarProduto(novoProdutoDTO);
             return CreatedAtAction(nameof(CreateProduto), produto);
         }
 

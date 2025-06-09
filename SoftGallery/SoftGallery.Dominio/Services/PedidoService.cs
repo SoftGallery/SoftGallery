@@ -73,5 +73,42 @@ namespace SoftGallery.Dominio.Services
                 .ToList();
         }
 
+        public Pedido UpdatePedido(string id, PedidoDTO pedidoAtualizadoDTO)
+        {
+            var pedidoExistente = dbContext.Pedidos
+                .Include(p => p.Produtos)
+                .Include(p => p.Cliente)
+                .FirstOrDefault(p => p.Id == id);
+
+            if (pedidoExistente == null)
+            {
+                throw new RecursoNaoEncontradoException("Pedido não encontrado.");
+            }
+
+            if (pedidoAtualizadoDTO.ProdutosIds.Length == 0)
+            {
+                throw new ArgumentException("É necessário enviar os ids dos produtos");
+            }
+
+            List<Produto> produtos = dbContext.Produtos
+                .Where(produto => pedidoAtualizadoDTO.ProdutosIds.Contains(produto.Id))
+                .ToList();
+
+            if (produtos.Count != pedidoAtualizadoDTO.ProdutosIds.Length)
+            {
+                throw new RecursoNaoEncontradoException("Um ou mais produtos não foram encontrados.");
+            }
+
+            // Atualiza os produtos
+            pedidoExistente.Produtos = produtos;
+
+            // Você pode atualizar outras propriedades se existirem
+
+            dbContext.SaveChanges();
+
+            return pedidoExistente;
+        }
+
+
     }
 }

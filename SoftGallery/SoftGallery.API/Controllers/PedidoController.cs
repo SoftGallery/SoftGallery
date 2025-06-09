@@ -19,7 +19,7 @@ namespace SoftGallery.API.Controllers
         {
             this.service = service;
         }
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public ActionResult<Pedido> CriarPedido([FromBody] PedidoDTO pedidoDTO)
         {
@@ -27,6 +27,32 @@ namespace SoftGallery.API.Controllers
             {
                 var pedido = service.CreatePedido(pedidoDTO);
                 return CreatedAtAction(nameof(ObterPedidoPorId), new { id = pedido.Id }, pedido);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(new { mensagem = ex.Message });
+            }
+            catch (RecursoNaoEncontradoException ex)
+            {
+                return NotFound(new { mensagem = ex.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = "Erro interno no servidor", detalhes = ex.Message });
+            }
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult<Pedido> AtualizarPedido(string id, [FromBody] PedidoDTO pedidoDTO)
+        {
+            try
+            {
+                var pedidoAtualizado = service.UpdatePedido(id, pedidoDTO);
+                return Ok(pedidoAtualizado);
             }
             catch (UnauthorizedAccessException ex)
             {

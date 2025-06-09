@@ -73,7 +73,7 @@ namespace SoftGallery.API.Controllers
             }
         }
 
-                [HttpPut("{id}")]
+        [HttpPut("{id}")]
         public IActionResult UpdateCampanha(string id, [FromBody] CampanhaDTOInput campanhaAtualizadaDTO)
         {
             bool atualizada = service.EditarCampanha(id, campanhaAtualizadaDTO);

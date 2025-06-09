@@ -1,132 +1,217 @@
 <template>
-<el-card v-if="tipo == 'destaque' "
-  style="width: 180px; height: auto; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;"
-  :body-style="{ padding: '0px' }"
->
-  <div style="display: flex; justify-content: center; align-items: center; position: relative; height: 150px;">
-    <div style="position: absolute; top: 8px; left: 8px; background-color: red; color: white; padding: 2px 6px; border-radius: 8px; font-size: 11px; font-weight: bold;">
-      -{{ desconto }}%
-    </div>
-    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-         style="width: 100%; height: 100%; object-fit: cover;">
-    <HeartButton style="position: absolute; top: 8px; right: 8px;"></HeartButton>
-  </div>
-
-  <div style="padding: 10px;">
-    <div class="card-titulo" style="font-size: 15px; font-weight: bold; ">{{ nome }}</div>
-    <div style="margin-top: 6px;">
-      <i class="fa-solid fa-star" style="color: #FFDE59;"></i>
-      {{ avalicao }}
-    </div>
-    <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center;">
-      <div>
-        <span style="font-size: 12px; color: #999; text-decoration: line-through;">R$ {{ precoOriginal }}</span><br>
-      <span style="font-size: 15px; font-weight: bold; color: #67c23a;">R$ {{ precoDesconto }}</span>
+  <el-card
+    v-if="tipo === 'destaque' || tipo === 'novidade'"
+    class="produto-card"
+    :body-style="{ padding: '0px' }"
+  >
+    <div class="imagem-container">
+      <div v-if="tipo === 'destaque'" class="badge badge-destaque">
+        -{{ desconto }}%
       </div>
-      <div style="top: 0%;">
-        <CartButton></CartButton> 
-      </div>  
-    </div>
-    
-  </div>
-</el-card>
-
-<el-card v-if="tipo == 'novidade'" style="width: 180px; height: auto; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;"
-  :body-style="{ padding: '0px' }"
->
-<div style="display: flex; justify-content: center; align-items: center; position: relative; height: 150px;">
-    <div style="position: absolute; top: 8px; left: 8px; background-color: #67c23a; color: white; padding: 2px 6px; border-radius: 8px; font-size: 11px; font-weight: bold;">
-      novo
-    </div>
-    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-         style="width: 100%; height: 100%; object-fit: cover;">
-    <HeartButton style="position: absolute; top: 8px; right: 8px;"></HeartButton>
-  </div>
-
-  <div style="padding: 10px;">
-    <div class="card-titulo" style="font-size: 15px; font-weight: bold;">{{ nome }}</div>
-    <div style="margin-top: 6px;">
-      <i class="fa-solid fa-star" style="color: #FFDE59;"></i>
-      {{ avalicao }}
-    </div>
-    <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center;">
-      <div>
-         <span style="font-size: 15px; font-weight: bold;">R$ {{ precoOriginal }}</span><br>
+      <div v-if="tipo === 'novidade'" class="badge badge-novidade">
+        novo
       </div>
-      <div>
-         <CartButton style=""></CartButton>
+
+      <img :src="computedImg" @error="onImageError" alt="Produto" class="imagem-produto" />
+      <!-- <HeartButton class="botao-heart" :applyStyle="true" /> -->
+    </div>
+
+    <div class="info-container">
+      <div class="card-titulo">{{ nome }}</div>
+
+      <div class="preco-container">
+        <div v-if="tipo === 'destaque'">
+          <span class="preco-original">R$ {{ precoOriginal.toFixed(2) }}</span><br />
+          <span class="preco-desconto">R$ {{ precoDesconto.toFixed(2) }}</span>
+        </div>
+        <div v-else>
+          <span class="preco-final">R$ {{ precoOriginal.toFixed(2) }}</span>
+        </div>
+
+        <CartButton @click="addToCartHandler" />
       </div>
     </div>
-    
-  </div>
-
-</el-card>
-
+  </el-card>
 </template>
+
 <script>
 import CartButton from './CartButton.vue';
-import HeartButton from './HeartButton.vue'
+import HeartButton from './HeartButton.vue';
+import imagemPadrao from '../assets/noimage.png';
+import { cart } from '../store/cart';
 
 export default {
-  name: 'MensagemDinamica',
+  name: 'CardProduto',
+  components: { CartButton, HeartButton },
   props: {
+    id: {
+      type: [String, Number],
+      required: true,
+    },
     tipo: {
       type: String,
-      required: false
+      required: false,
+      validator: value => ['destaque', 'novidade'].includes(value),
+    },
+    img: {
+      type: String,
+      required: false,
     },
     nome: {
       type: String,
-      required: true
+      required: true,
     },
     precoOriginal: {
       type: Number,
-      required: false
+      required: false,
+      default: 0,
     },
     precoDesconto: {
       type: Number,
-      required: true
+      required: false,
+      default: 0,
     },
     desconto: {
       type: Number,
-      required: true
+      required: false,
+      default: 0,
     },
-    avalicao: {
+    avaliacao: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
-  components: {
-    CartButton,
-    HeartButton
+  data() {
+    return {
+      imagemAtual: this.img,
+    };
+  },
+  computed: {
+    computedImg() {
+      return this.imagemAtual && this.imagemAtual.trim() !== ''
+        ? this.imagemAtual
+        : imagemPadrao;
+    },
+  },
+  methods: {
+    onImageError() {
+      this.imagemAtual = imagemPadrao;
+    },
 
+    addToCartHandler() {
+      const produto = {
+        id: this.id,
+        nome: this.nome,
+        imagemUrl: this.computedImg,
+        preco: this.precoDesconto || this.precoOriginal,
+        stock: 10,
+        quantity: 1,
+      };
 
-  }
-}
+      // console.log('Adicionando ao carrinho:', produto);
+      cart.addToCart(produto);
+    },
+  },
+};
 
 </script>
 
-<style>
-.preco-container {
+<style scoped>
+.produto-card {
+  width: 100%;
+  max-width: 220px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-top: 10px;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
 }
 
-.preco-atual {
-  font-size: 18px;
+.imagem-container {
+  position: relative;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagem-produto {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 11px;
   font-weight: bold;
-  color: #67c23a; 
+  color: white;
+  z-index: 1;
+}
+
+.badge-destaque {
+  background-color: red;
+}
+
+.badge-novidade {
+  background-color: #67c23a;
+}
+
+.botao-heart {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.info-container {
+  padding: 10px;
+}
+
+.card-titulo {
+  font-size: 15px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.avaliacao {
+  margin-top: 6px;
+  color: #555;
+}
+
+.estrela {
+  color: #FFDE59;
+}
+
+.preco-container {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .preco-original {
-  font-size: 14px;
+  font-size: 12px;
+  color: #999;
   text-decoration: line-through;
-  color: #aaa;
-}
-.card-titulo{
-  text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
 }
 
+.preco-desconto {
+  font-size: 15px;
+  font-weight: bold;
+  color: #67c23a;
+}
 
+.preco-final {
+  font-size: 15px;
+  font-weight: bold;
+}
 </style>

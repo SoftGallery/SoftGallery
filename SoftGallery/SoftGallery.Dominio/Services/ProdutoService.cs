@@ -53,7 +53,7 @@ namespace SoftGallery.Dominio.Services
             return produto;
         }
 
-        public ProdutoDTOListagem CriarProduto(ProdutoDTOListagem produto)
+        public Produto CriarProduto(ProdutoDTOListagem produto)
         {
             Produto novoProduto = new Produto(produto.nome, produto.preco, produto.descricao, produto.imagemUrl);
 
@@ -66,7 +66,7 @@ namespace SoftGallery.Dominio.Services
                 imagemUrl = novoProduto.ImagemURL,
                 preco = novoProduto.Preco
             };
-            return novoProdutoDTO;
+            return novoProduto;
         }
 
         public bool EditarProduto(string id, ProdutoDTOListagem produto)

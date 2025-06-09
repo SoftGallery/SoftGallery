@@ -16,14 +16,14 @@
           <span>Informações da Loja</span>
         </el-menu-item>
 
-        <el-menu-item index="/adm/cadastrar-produto">
+        <el-menu-item index="/adm/produto">
           <el-icon><document /></el-icon>
-          <span>Cadastro de Produtos</span>
+          <span>Produtos</span>
         </el-menu-item>
 
-        <el-menu-item index="/adm/cadastrar-campanha">
+        <el-menu-item index="/adm/campanha">
           <el-icon><icon-menu /></el-icon>
-          <span>Cadastro de Campanhas</span>
+          <span>Campanhas</span>
         </el-menu-item>
       </el-menu>
     </el-col>
@@ -65,7 +65,8 @@ const handleClose = (key: string, keyPath: string[]) => {
 }
 
 .el-menu-vertical-demo{
-    background-color: white !important;
+    background-color: #fbfbfb !important;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
 }
 
 .logo{
@@ -77,9 +78,17 @@ const handleClose = (key: string, keyPath: string[]) => {
 }
 
 .admin-bg {
-  background-color: #fbfbfb;
+  /* background-color: #000000; */
   height: 100vh;
-  width: 120vw;
+  width: 100%;
   overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 
+
+.el-col-18 {
+    flex: none !important;
+    /* max-width: 100% !important; */
 }
 </style>

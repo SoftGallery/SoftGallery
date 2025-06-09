@@ -4,8 +4,10 @@ import Home from "./pages/Home.vue"
 import LoginAdm from "./pages/LoginAdm.vue"
 import Produto from "./pages/Produto.vue"
 import Produtos from './pages/Produtos.vue'
-import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs'
 import Carrinho from './pages/Carrinho.vue'
+import Loja from './pages/Adm/Loja.vue'
+import ProdutoAdmin from './pages/Adm/Produto.vue'
+import CampanhaAdmin from './pages/Adm/Campanha.vue'
 
 
 const routes = [
@@ -14,7 +16,10 @@ const routes = [
   { path: '/contato', component: LoginAdm },
   { path: '/produto', component: Produto },
   {path: '/produtos', component: Produtos},
-  {path: '/carrinho', component: Carrinho}
+  {path: '/carrinho', component: Carrinho},
+  {path: '/adm/geral', component: Loja},
+  {path: '/adm/produto', component: ProdutoAdmin},
+  {path: '/adm/campanha', component: CampanhaAdmin},
 ]
 
 const router = createRouter({
