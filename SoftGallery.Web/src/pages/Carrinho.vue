@@ -116,9 +116,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { cart } from '../store/cart'
 
-// Manipuladores de quantidade
+const router = useRouter()
+
 const aumentarQuantidade = (produto: typeof cart.items[number]) => {
   cart.updateQuantity(produto.id, produto.quantity + 1)
 }
@@ -127,22 +129,22 @@ const diminuirQuantidade = (produto: typeof cart.items[number]) => {
   cart.updateQuantity(produto.id, produto.quantity - 1)
 }
 
-// Remoção
 const deleteProduto = (id: string) => {
   cart.removeFromCart(id)
 }
 
-// Finalização do pedido
-const finalizar = () => {
-  cart.finalizarPedido()
-  alert('Pedido finalizado com sucesso!')
+const finalizar = async() => {
+  const res = await cart.finalizarPedido()
+  if (res) {
+    router.push('/agradecimento')
 }
 
-// Utilitário para formatar preços
+}
+
 const formatarPreco = (valor: number) =>
   valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
-// Variáveis reativas para total e existência de itens no carrinho
 const valorTotal = computed(() => cart.totalPrice)
 const hasItems = computed(() => cart.items.length > 0)
+
 </script>

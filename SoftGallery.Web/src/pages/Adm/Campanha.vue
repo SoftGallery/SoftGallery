@@ -5,6 +5,10 @@
             <el-button type="primary" @click="openModal()">Adicionar Campanha</el-button>
         </div>
 
+        <el-checkbox v-model="apenasAtivas" @change="carregarCampanhas">
+            Apenas campanhas ativas
+        </el-checkbox>
+
         <el-table :data="campanhas" style="width: 100%" v-loading="loading">
             <el-table-column prop="id" label="ID" width="300" />
             <el-table-column prop="nome" label="Nome" />
@@ -60,7 +64,8 @@
                 </div>
 
                 <el-form-item label="Imagem da Campanha">
-                    <div style="display: flex; justify-content: space-between; border: 2px dotted #cccc; border-radius: 8px; padding: 4px; width: 100%; height: 100px; align-items: center;">
+                    <div
+                        style="display: flex; justify-content: space-between; border: 2px dotted #cccc; border-radius: 8px; padding: 4px; width: 100%; height: 100px; align-items: center;">
                         <el-upload class="upload-demo" :before-upload="beforeUpload" :show-file-list="false">
                             <el-button type="outline">Selecionar Imagem</el-button>
                         </el-upload>
@@ -96,11 +101,12 @@ const loading = ref(false)
 const modalVisible = ref(false)
 const modalTitle = ref('')
 
+const apenasAtivas = ref(false) // ✅ checkbox de filtro
+
 const formRef = ref(null)
 const form = reactive({
     id: null,
     nome: '',
-    //   descricao: '',
     dataInicio: '',
     dataFim: '',
     imagemFile: null,
@@ -116,7 +122,6 @@ function resetForm() {
     Object.assign(form, {
         id: null,
         nome: '',
-        // descricao: '',
         dataInicio: '',
         dataFim: '',
         imagemFile: null,
@@ -138,10 +143,16 @@ function beforeUpload(file) {
     return false
 }
 
+// ✅ Carrega campanhas com ou sem filtro "ativas=true"
 async function carregarCampanhas() {
     loading.value = true
     try {
-        const res = await axios.get('https://localhost:7273/api/Campanha')
+        let url = 'https://localhost:7273/api/Campanha'
+        if (apenasAtivas.value) {
+            url += '?ativas=true'
+        }
+
+        const res = await axios.get(url)
         campanhas.value = res.data
     } finally {
         loading.value = false
@@ -163,7 +174,6 @@ async function openModal(campanha = null) {
             Object.assign(form, {
                 id: data.id,
                 nome: data.nome,
-                // descricao: data.descricao || '',
                 dataInicio: data.dataInicio,
                 dataFim: data.dataFim,
                 imagemPreview: data.imagemURL || '',
@@ -180,7 +190,6 @@ async function openModal(campanha = null) {
     modalVisible.value = true
 }
 
-
 async function saveCampanha() {
     formRef.value.validate(async valid => {
         if (!valid) return
@@ -189,7 +198,6 @@ async function saveCampanha() {
             if (form.id) {
                 await axios.put(`https://localhost:7273/api/Campanha/${form.id}`, {
                     nome: form.nome,
-                    descricao: form.descricao,
                     dataInicio: form.dataInicio,
                     dataFim: form.dataFim,
                     produtoIds: form.produtosSelecionados
@@ -203,7 +211,6 @@ async function saveCampanha() {
             } else {
                 const { data } = await axios.post('https://localhost:7273/api/Campanha', {
                     nome: form.nome,
-                    descricao: form.descricao,
                     dataInicio: form.dataInicio,
                     dataFim: form.dataFim,
                     produtoIds: form.produtosSelecionados
@@ -244,6 +251,7 @@ onMounted(() => {
     carregarProdutos()
 })
 </script>
+
 
 <style scoped>
 .campaign-wrapper {

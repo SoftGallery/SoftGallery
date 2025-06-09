@@ -66,29 +66,30 @@ export const cart = reactive({
     }
   },
 
-  finalizarPedido(pedidoId?: string) {
+  async finalizarPedido(pedidoId?: string): Promise<boolean> {
     const produtosIds = cart.getCartIds().map(id => id.toString());
 
     if (produtosIds.length === 0) {
       showAlert('O carrinho está vazio!', 'error');
-      return;
+      return false;
     }
 
     const pedidoDTO = { produtosIds };
 
-    const operacao = pedidoId
-      ? pedidoService.atualizarPedido(pedidoId, pedidoDTO)
-      : pedidoService.criarPedido(pedidoDTO);
+    try {
+      const pedido = pedidoId
+        ? await pedidoService.atualizarPedido(pedidoId, pedidoDTO)
+        : await pedidoService.criarPedido(pedidoDTO);
 
-    operacao
-      .then((pedido: Pedido) => {
-        showAlert(`Pedido ${pedidoId ? 'atualizado' : 'realizado'} com sucesso!`, 'success');
-        cart.clearCart();
-        console.log('Pedido:', pedido);
-      })
-      .catch((e: any) => {
-        showAlert(e.message, 'error');
-      });
+      showAlert(`Pedido ${pedidoId ? 'atualizado' : 'realizado'} com sucesso!`, 'success');
+      cart.clearCart();
+      console.log('Pedido:', pedido);
+
+      return true; // sucesso
+    } catch (e: any) {
+      showAlert(e.message, 'error');
+      return false; // erro
+    }
   },
 
   clearCart() {

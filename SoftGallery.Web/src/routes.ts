@@ -9,6 +9,8 @@ import Loja from './pages/Adm/Loja.vue'
 import ProdutoAdmin from './pages/Adm/Produto.vue'
 import CampanhaAdmin from './pages/Adm/Campanha.vue'
 import ProdutosCampanha from './pages/ProdutosCampanha.vue'
+import Login from './pages/Login.vue'
+import Agradecimento from './pages/Agradecimento.vue'
 
 
 const routes = [
@@ -22,6 +24,8 @@ const routes = [
   {path: '/adm/produto', component: ProdutoAdmin},
   {path: '/adm/campanha', component: CampanhaAdmin},
   {path: '/campanha/:id', component: ProdutosCampanha},
+  {path: '/login', component: Login},
+  {path: '/agradecimento', component: Agradecimento},
 ]
 
 const router = createRouter({

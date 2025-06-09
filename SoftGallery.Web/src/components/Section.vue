@@ -72,7 +72,7 @@
           <h2 class="titulo">Campanhas</h2>
           <p class="descricao">Explore nossos produtos que fazem parte da campanha</p>
         </div>
-        <button class="view-all">Ver todos</button>
+        <!-- <button class="view-all">Ver todos</button> -->
       </div>
       <div class="produtos-grid">
         <div class="produto" v-for="campanha in campanhas" :key="campanha.nome">

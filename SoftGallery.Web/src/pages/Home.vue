@@ -3,17 +3,18 @@ import Section from '../components/Section.vue';
 import Footer from '../components/Footer.vue';
 import axios from 'axios';
 import { ResumoProdutoDTO } from '../dtos/produtoDTO';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import Video from '../assets/video.mp4'
 
 const listaProdutos = ref<ResumoProdutoDTO[]>([]);
 const campanha = ref([]);
+
 onMounted(async () => {
   try {
     const response = await axios.get<ResumoProdutoDTO[]>('https://localhost:7273/api/Produto');
-    const res = await axios.get('https://localhost:7273/api/Campanha');
-    campanha.value = res.data
-    console.log(campanha.value)
+    const res = await axios.get('https://localhost:7273/api/Campanha?ativas=true');
+    campanha.value = res.data;
+
     listaProdutos.value = response.data.map((produto, index) => ({
       ...produto,
       tipo: index % 2 === 0 ? 'destaque' : 'novidade',
@@ -23,6 +24,14 @@ onMounted(async () => {
     console.error('Erro ao carregar produtos:', error);
   }
 });
+
+// Computed que retorna os primeiros 6 produtos marcados como novidades
+const novidades = computed(() => {
+  // Filtra os produtos que estão como "novidade"
+  // const produtosNovidade = listaProdutos.value.filter(produto => produto.tipo === 'novidade');
+  // Retorna apenas os 6 primeiros
+  return listaProdutos.value.slice(0, 8);
+});
 </script>
 
 <template>
@@ -31,8 +40,8 @@ onMounted(async () => {
       <div class="hero-text">
         <h1 class="hero-title">Tecnologia de Ponta com Descontos Imperdíveis</h1>
         <p class="hero-subtitle">
-          Aproveite o Super Verão Tech! Gadgets, celulares, notebooks e acessórios com até <strong>40% OFF</strong>.
-          Ofertas exclusivas para transformar seu dia a dia com inovação.
+          Aproveite o Super Verão Tech! Gadgets, celulares, notebooks e acessórios.
+          Ofertas exclusivas para transformar seu dia a dia com inovação. Confira nossas campanhas!
         </p>
         <!-- <div class="hero-buttons">
           <el-button class="primary-btn">Comprar Agora</el-button>
@@ -44,7 +53,11 @@ onMounted(async () => {
 
   <!-- <img src="https://picsum.photos/400/400" alt="Imagem aleatória" class="hero-image" /> -->
 
-  <div class="container">
+  <div style="margin-top: 16px;"></div>
+  
+  <Section :produtosDestaque="novidades" type="destaques" />
+  <Section :campanhas="campanha" type="categorias" />
+  <!-- <div class="container" style="width: 100vw; display: flex; justify-content: center; align-items: center;">
     <section>
       <div class="offer-cards">
         <div class="offer-card">
@@ -66,16 +79,12 @@ onMounted(async () => {
       </div>
     </section>
   </div>
-
-
-  <Section :campanhas="campanha" type="categorias" />
-  <Section :produtosDestaque="listaProdutos" type="destaques" />
+  <Section :produtosDestaque="listaProdutos" type="novidades" /> -->
   <section class="mt-12 relative bg-black text-white container-principal">
     <video autoplay muted loop style="width: 100vw;" class="w-full h-[500px] object-cover brightness-75">
       <source :src="Video" type="video/mp4" />
     </video>
   </section>
-  <!-- <Section :produtosDestaque="listaProdutos" type="novidades" /> -->
   <Footer />
 </template>
 
@@ -186,6 +195,7 @@ onMounted(async () => {
   display: flex;
   gap: 2rem;
   margin-top: 64px;
+  justify-content: center;
 }
 
 .offer-card {

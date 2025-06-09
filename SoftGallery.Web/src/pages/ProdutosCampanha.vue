@@ -9,11 +9,11 @@ import Video from '../assets/video.mp4'
 
 const listaProdutos = ref<ResumoProdutoDTO[]>([]);
 const campanha = ref();
-const route = useRoute(); // <--- Captura o ID da rota
+const route = useRoute();
 const campanhaName = ref();
 
 onMounted(async () => {
-    const campanhaId = route.params.id as string; // id da URL
+    const campanhaId = route.params.id as string;
 
     try {
         const response = await axios.get(`https://localhost:7273/api/Campanha/${campanhaId}/produtos`);

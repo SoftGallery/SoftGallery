@@ -3,41 +3,62 @@ import Section from '../components/Section.vue';
 import Footer from '../components/Footer.vue';
 import axios from 'axios';
 import { ResumoProdutoDTO } from '../dtos/produtoDTO';
-import { onMounted, ref } from 'vue';
-import Video from '../assets/video.mp4'
+import { onMounted, ref, watch } from 'vue';
+import Video from '../assets/video.mp4';
 
 const listaProdutos = ref<ResumoProdutoDTO[]>([]);
-const campanha = ref([]);
-onMounted(async () => {
-    try {
-        const response = await axios.get<ResumoProdutoDTO[]>('https://localhost:7273/api/Produto');
-        // const res = await axios.get('https://localhost:7273/api/Campanha');
-        // campanha.value = res.data
-        console.log(campanha.value)
-        listaProdutos.value = response.data.map((produto, index) => ({
-            ...produto,
-            tipo: index % 2 === 0 ? 'destaque' : 'novidade',
-            avalicao: 4 + (Math.random() * 1)
-        }));
-    } catch (error) {
-        console.error('Erro ao carregar produtos:', error);
-    }
+const campanha = ref<any[]>([]);
+
+const ordenarPor = ref<'nome' | 'preco'>('nome');
+const direcao = ref<'asc' | 'desc'>('asc');
+
+async function carregarProdutos() {
+  try {
+    const url = `https://localhost:7273/api/Produto?ordenarPor=${ordenarPor.value}&direcao=${direcao.value}`;
+    const response = await axios.get<ResumoProdutoDTO[]>(url);
+
+    listaProdutos.value = response.data.map((produto, index) => ({
+      ...produto,
+      tipo: index % 2 === 0 ? 'destaque' : 'novidade',
+      avalicao: 4 + Math.random(),
+    }));
+  } catch (error) {
+    console.error('Erro ao carregar produtos:', error);
+  }
+}
+
+onMounted(() => {
+  carregarProdutos();
+});
+
+watch([ordenarPor, direcao], () => {
+  carregarProdutos();
 });
 </script>
 
 <template>
-
-    <div
-        class="h-[200px] flex items-center justify-center bg-gradient-to-b from-[#235997] to-transparent relative">
+    <div class="h-[200px] flex items-center justify-center bg-gradient-to-b from-[#235997] to-transparent relative">
         <h1 class="text-white text-4xl font-light uppercase tracking-widest text-center">
-            {{ "Produtos" }}
+            Produtos
         </h1>
     </div>
-    <Section :produtosDestaque="listaProdutos" type="produtos" />
 
-    <!-- <Section :produtosDestaque="listaProdutos" type="novidades" /> -->
+    <div class="max-w-4xl mx-auto my-6 flex justify-end gap-4 items-center">
+        <el-select v-model="ordenarPor" placeholder="Ordenar por" size="medium" clearable class="w-48">
+            <el-option label="Nome" value="nome" />
+            <el-option label="Preço" value="preco" />
+        </el-select>
+
+        <el-select v-model="direcao" placeholder="Direção" size="medium" clearable class="w-48">
+            <el-option label="Crescente" value="asc" />
+            <el-option label="Decrescente" value="desc" />
+        </el-select>
+    </div>
+
+    <Section :produtosDestaque="listaProdutos" type="produtos" />
     <Footer />
 </template>
+
 
 <style scoped>
 .hero-section {

@@ -15,8 +15,8 @@
           <el-menu class="menu-desktop" :router="true" mode="horizontal" :default-active="$route.path" style="display: flex; justify-content: right; align-items: center;">
             <el-menu-item index="/">Home</el-menu-item>
             <el-menu-item index="/produtos">Produtos</el-menu-item>
-            <el-menu-item index="/contato">Contato</el-menu-item>
-            <el-menu-item index="/login-adm">Login</el-menu-item>
+            <!-- <el-menu-item index="/contato">Contato</el-menu-item> -->
+            <!-- <el-menu-item index="/login-adm">Login</el-menu-item> -->
             <el-menu-item index="/adm/painel-adm">Adm</el-menu-item>
             <router-link to="/carrinho"><cart-button /></router-link>
           </el-menu>
@@ -35,7 +35,7 @@
         <el-menu-item index="/sobre">Sobre</el-menu-item>
         <el-menu-item index="/contato">Contato</el-menu-item>
         <el-menu-item index="/login-adm">Login</el-menu-item>
-        <el-menu-item index="/adm/painel-adm">Adm</el-menu-item>
+        <el-menu-item index="/adm/produto">Adm</el-menu-item>
       </el-menu>
     </el-header>
 
