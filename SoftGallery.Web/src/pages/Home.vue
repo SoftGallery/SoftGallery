@@ -7,10 +7,13 @@ import { onMounted, ref } from 'vue';
 import Video from '../assets/video.mp4'
 
 const listaProdutos = ref<ResumoProdutoDTO[]>([]);
-
+const campanha = ref([]);
 onMounted(async () => {
   try {
     const response = await axios.get<ResumoProdutoDTO[]>('https://localhost:7273/api/Produto');
+    const res = await axios.get('https://localhost:7273/api/Campanha');
+    campanha.value = res.data
+    console.log(campanha.value)
     listaProdutos.value = response.data.map((produto, index) => ({
       ...produto,
       tipo: index % 2 === 0 ? 'destaque' : 'novidade',
@@ -26,19 +29,20 @@ onMounted(async () => {
   <div id="principal-container" class="hero-section h-[500px]">
     <div class="hero-content">
       <div class="hero-text">
-        <h1 class="hero-title">Ofertas Especiais de Verão</h1>
+        <h1 class="hero-title">Tecnologia de Ponta com Descontos Imperdíveis</h1>
         <p class="hero-subtitle">
-          Descubra nossa nova coleção com até 40% de desconto.
-          Produtos exclusivos para você aproveitar o verão com estilo.
+          Aproveite o Super Verão Tech! Gadgets, celulares, notebooks e acessórios com até <strong>40% OFF</strong>.
+          Ofertas exclusivas para transformar seu dia a dia com inovação.
         </p>
-        <div class="hero-buttons">
-          <el-button class="primary-btn">Ver ofertas</el-button>
-          <el-button class="secondary-btn">Explorar coleção</el-button>
-        </div>
+        <!-- <div class="hero-buttons">
+          <el-button class="primary-btn">Comprar Agora</el-button>
+          <el-button class="secondary-btn">Ver Coleção Completa</el-button>
+        </div> -->
       </div>
-      <!-- <img src="https://picsum.photos/400/400" alt="Imagem aleatória" class="hero-image" /> -->
     </div>
   </div>
+
+  <!-- <img src="https://picsum.photos/400/400" alt="Imagem aleatória" class="hero-image" /> -->
 
   <div class="container">
     <section>
@@ -63,71 +67,120 @@ onMounted(async () => {
     </section>
   </div>
 
+
+  <Section :campanhas="campanha" type="categorias" />
+  <Section :produtosDestaque="listaProdutos" type="destaques" />
   <section class="mt-12 relative bg-black text-white container-principal">
     <video autoplay muted loop style="width: 100vw;" class="w-full h-[500px] object-cover brightness-75">
       <source :src="Video" type="video/mp4" />
     </video>
   </section>
-
-  <Section :produtosDestaque="listaProdutos" type="categorias" />
-  <Section :produtosDestaque="listaProdutos" type="destaques" />
-  <Section :produtosDestaque="listaProdutos" type="novidades" />
+  <!-- <Section :produtosDestaque="listaProdutos" type="novidades" /> -->
   <Footer />
 </template>
 
 <style scoped>
 .hero-section {
+  padding: 64px 32px;
+  background: linear-gradient(-70deg, #235997, #0f2350, #3b38e6, #3e035a9d);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f1f1f1;
+}
+
+/* .hero-section {
   padding: 64px;
   background: linear-gradient(-70deg, #235997, #0f2350, #3b38e6, #3e035a9d);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
-}
-
-.hero-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 3rem;
-}
+} */
 
 .hero-text {
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); */
+  text-align: center;
 }
 
 .hero-title {
-  font-size: 48px;
-  font-weight: bold;
-  color: silver;
-  margin-bottom: 8px;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  width: fit-content;
 }
 
 .hero-subtitle {
-  font-size: 16px;
-  color: gray;
-  margin-bottom: 16px;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin-bottom: 2rem;
+  max-width: 900px;
 }
 
 .hero-buttons {
   display: flex;
-  gap: 16px;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
+/* Botões estilizados */
 .primary-btn {
-  background-color: #18181B;
+  background: linear-gradient(to right, #3b82f6, #9333ea);
   color: white;
-  padding: 10px 30px;
+  padding: 12px 28px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.primary-btn:hover {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  transform: translateY(-2px);
 }
 
 .secondary-btn {
-  padding: 10px 30px;
+  background-color: transparent;
+  color: #cbd5e1;
+  border: 1px solid #cbd5e1;
+  padding: 12px 28px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
-.hero-image {
-  border-radius: 10px;
-  max-width: 100%;
+.secondary-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+  color: #fff;
+  transform: translateY(-2px);
 }
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 
 .offer-cards {
   display: flex;

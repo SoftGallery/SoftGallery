@@ -10,13 +10,8 @@
       </div>
       <div class="produtos-grid">
         <div class="produto" v-for="item in produtosNovos" :key="item.id">
-          <CardProduto
-            tipo="novidade"
-            :id="item.id"
-            :nome="item.nome"
-            :precoOriginal="item.preco"
-            :img="item.imagemUrl"
-          />
+          <CardProduto tipo="novidade" :id="item.id" :nome="item.nome" :precoOriginal="item.preco"
+            :img="item.imagemUrl" />
         </div>
       </div>
     </div>
@@ -26,21 +21,46 @@
     <div class="container">
       <div class="header">
         <div class="header-text">
-          <h2 class="titulo">Produtos em destaque</h2>
-          <p class="descricao">Selecionados especialmente para você</p>
+          <h2 class="titulo">Novidades</h2>
+          <p class="descricao">Os produtos mais recentes da loja</p>
         </div>
-        <button class="view-all">Ver todos</button>
+        <router-link to="/produtos" class="view-all">Ver todos</router-link>
       </div>
       <div class="produtos-grid">
         <div class="produto" v-for="item in produtosDestaque" :key="item.id">
-          <CardProduto
-            tipo="novidade"
-            :id="item.id"
-            :nome="item.nome"
-            :img="item.imagemUrl"
-            :precoOriginal="item.preco"
-          />
+          <CardProduto tipo="novidade" :id="item.id" :nome="item.nome" :img="item.imagemUrl"
+            :precoOriginal="item.preco" />
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section v-if="type == 'produtos'" id="produtos" class="produtos-section">
+    <div class="container">
+      <div class="header">
+        <div class="header-text">
+          <!-- <h2 class="titulo">Produtos</h2> -->
+          <!-- <p class="descricao">Os produtos mais recentes da loja</p> -->
+        </div>
+        <!-- <button class="view-all">Ver todos</button> -->
+      </div>
+      <div :class="['produtos-grid', produtosDestaque.length === 0 ? 'destaques-campanha' : '']">
+        <div class="produto" v-for="item in produtosDestaque" :key="item.id">
+          <CardProduto tipo="produtos" :id="item.id" :nome="item.nome" :img="item.imagemUrl"
+            :precoOriginal="item.preco" />
+        </div>
+
+        <div v-if="produtosDestaque.length === 0"
+          class="flex flex-col items-center justify-center py-20 text-center text-gray-500">
+          <i class="fa-regular fa-circle-xmark text-gray-700 fa-3x pb-2"></i>
+          <h2 class="text-2xl font-semibold text-gray-700 mb-2">Nenhum produto disponível</h2>
+          <p class="text-gray-500 max-w-md pb-[16px]">Parece que ainda não foram adicionados produtos a esta campanha. Explore
+            outras seções da loja.</p>
+          <router-link to="/produtos" class="px-5 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition text-sm">
+            <i class="fa-solid fa-magnifying-glass mr-2"></i>Descobrir Produtos
+          </router-link>
+        </div>
+
       </div>
     </div>
   </section>
@@ -49,14 +69,15 @@
     <div class="container">
       <div class="header">
         <div class="header-text">
-          <h2 class="titulo">Categorias</h2>
-          <p class="descricao">Explore nossos produtos por categoria</p>
+          <h2 class="titulo">Campanhas</h2>
+          <p class="descricao">Explore nossos produtos que fazem parte da campanha</p>
         </div>
         <button class="view-all">Ver todos</button>
       </div>
       <div class="produtos-grid">
-        <div class="produto" v-for="item in produtosDestaque" :key="item.nome">
-          <CardCategoria :nome="item.nome" />
+        <div class="produto" v-for="campanha in campanhas" :key="campanha.nome">
+          <CardCategoria :id="campanha.id" :nome="campanha.nome" :imagemUrl="campanha.imagemURL" />
+          <!-- <p>{{ campanha.nome }}</p> -->
         </div>
       </div>
     </div>
@@ -77,8 +98,13 @@ export default {
     },
     produtosDestaque: {
       type: Array as PropType<ResumoProdutoDTO[]>,
-      required: true,
+      required: false,
       default: () => [],
+    },
+    campanhas: {
+      type: Array as PropType<any[]>,
+      required: false,
+      default: () => []
     },
     produtosNovos: {
       type: Array as PropType<ResumoProdutoDTO[]>,
@@ -183,41 +209,53 @@ section {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  justify-content: flex-start; /* Alinhamento à esquerda */
+  justify-content: flex-start;
+  /* Alinhamento à esquerda */
   align-items: flex-start;
+  margin: auto 0;
+}
+
+.destaques-campanha{
+  justify-content: center;
 }
 
 .produto {
-  flex: 1 1 23%; /* Tamanho ideal para 4 colunas */
-  max-width: 23%; /* Para garantir que o card ocupe 1/4 da linha */
+  flex: 1 1 23%;
+  /* Tamanho ideal para 4 colunas */
+  max-width: 23%;
+  /* Para garantir que o card ocupe 1/4 da linha */
   margin-bottom: 16px;
 }
 
 /* Responsividade para dispositivos móveis e tablets */
 @media (max-width: 767px) {
   .produto {
-    flex: 1 1 100%; /* Cada produto ocupará 100% da largura da tela */
+    flex: 1 1 100%;
+    /* Cada produto ocupará 100% da largura da tela */
     max-width: 100%;
   }
 }
 
 @media (min-width: 600px) and (max-width: 899px) {
   .produto {
-    flex: 1 1 48%; /* 50% para dispositivos de tamanho médio */
+    flex: 1 1 48%;
+    /* 50% para dispositivos de tamanho médio */
     max-width: 48%;
   }
 }
 
 @media (min-width: 900px) and (max-width: 1199px) {
   .produto {
-    flex: 1 1 31%; /* 3 colunas para telas médias */
+    flex: 1 1 31%;
+    /* 3 colunas para telas médias */
     max-width: 31%;
   }
 }
 
 @media (min-width: 1200px) {
   .produto {
-    flex: 1 1 23%; /* 4 colunas para telas grandes */
+    flex: 1 1 23%;
+    /* 4 colunas para telas grandes */
     max-width: 23%;
   }
 }

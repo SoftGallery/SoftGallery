@@ -1,121 +1,118 @@
 <template>
   <!-- Cabeçalho -->
-  <div class="bg-gradient-to-r from-purple-500 to-violet-700 text-white py-8">
-    <div class="max-w-6xl mx-auto px-4">
+  <div class="bg-gray-800 text-white py-6">
+    <div class="max-w-4xl mx-auto px-4">
       <div class="flex items-center gap-4">
-        <div class="p-3 rounded-xl bg-white/20 backdrop-blur-sm">
-          <i class="fa-solid fa-cart-shopping text-2xl"></i>
+        <div class="p-3 rounded-lg bg-gray-700">
+          <i class="fa-solid fa-cart-shopping text-xl"></i>
         </div>
         <div>
-          <h1 class="text-2xl sm:text-3xl font-bold">Seu carrinho</h1>
-          <p class="text-sm sm:text-base mt-1">{{ cart.items.length }} produtos selecionados</p>
+          <h1 class="text-xl sm:text-2xl font-semibold">Seu carrinho</h1>
+          <p class="text-sm mt-1 text-gray-300">{{ cart.items.length }} produtos selecionados</p>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Conteúdo principal -->
-  <div class="min-h-screen -mt-6 pt-6 px-4 max-w-6xl mx-auto">
+  <div class="min-h-screen py-6 px-4 max-w-4xl mx-auto">
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
       <!-- Lista de Produtos -->
       <div class="xl:col-span-2 order-2 xl:order-1">
-        <div v-if="hasItems" class="bg-gray-100 shadow-md rounded-2xl border border-white/20">
-          <div v-for="p in cart.items" :key="p.id" class="p-4 sm:p-6 border-b last:border-b-0 hover:bg-gray-50 transition">
+        <div v-if="hasItems" class="bg-white rounded-xl shadow border border-gray-200">
+          <div v-for="p in cart.items" :key="p.id" class="p-4 border-b last:border-b-0 hover:bg-gray-50 transition">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-
               <!-- Imagem -->
               <div>
-                <img class="rounded-xl h-32 w-full object-cover" :src="p.imagemUrl" alt="Produto">
+                <img class="rounded-lg h-28 w-full object-cover" :src="p.imagemUrl" alt="Produto">
               </div>
 
               <!-- Informações -->
               <div>
-                <h3 class="text-base sm:text-lg font-semibold text-slate-900">{{ p.nome }}</h3>
-                <p class="text-xs text-gray-500 line-clamp-1 mb-2">ID: {{ p.id }}</p>
+                <h3 class="text-base font-medium text-gray-900">{{ p.nome }}</h3>
+                <p class="text-xs text-gray-500 mb-2">ID: {{ p.id }}</p>
                 <div class="flex items-center gap-2">
-                  <span class="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-violet-700">
+                  <span class="text-base font-semibold text-gray-800">
                     {{ formatarPreco(p.preco) }}
                   </span>
-                  <span class="text-xs bg-green-100 text-green-900 rounded-full py-1 px-2 font-medium">Em estoque</span>
+                  <span class="text-xs bg-green-100 text-green-800 rounded px-2 py-0.5 font-medium">Em estoque</span>
                 </div>
               </div>
 
               <!-- Controles -->
               <div class="flex flex-col items-start sm:items-end gap-2">
                 <div class="flex items-center gap-2">
-                  <button @click="diminuirQuantidade(p)" class="p-2 bg-gray-200 rounded hover:bg-rose-300">
-                    <i class="fa-solid fa-minus text-rose-500"></i>
+                  <button @click="diminuirQuantidade(p)" class="p-2 bg-gray-200 rounded hover:bg-gray-300">
+                    <i class="fa-solid fa-minus text-gray-700"></i>
                   </button>
-                  <span class="text-base font-bold">{{ p.quantity }}</span>
-                  <button @click="aumentarQuantidade(p)" class="p-2 bg-gray-200 rounded hover:bg-emerald-200">
-                    <i class="fa-solid fa-plus text-emerald-500"></i>
+                  <span class="text-base font-semibold">{{ p.quantity }}</span>
+                  <button @click="aumentarQuantidade(p)" class="p-2 bg-gray-200 rounded hover:bg-gray-300">
+                    <i class="fa-solid fa-plus text-gray-700"></i>
                   </button>
                 </div>
-                <span class="text-lg font-bold text-slate-900">{{ formatarPreco(p.preco) }}</span>
+                <span class="text-base font-bold text-gray-900">{{ formatarPreco(p.preco) }}</span>
                 <button @click="deleteProduto(p.id)" class="text-sm text-red-500 hover:underline">Remover</button>
               </div>
-
             </div>
           </div>
         </div>
 
         <!-- Carrinho vazio -->
-        <div v-else class="bg-gray-100 shadow-md rounded-2xl border border-white/20 p-8 text-center">
-          <div class="mb-6">
-            <i class="fa-solid fa-cart-shopping text-6xl text-purple-400 bg-purple-100 p-6 rounded-full"></i>
+        <div v-else class="bg-white shadow rounded-xl border border-gray-200 p-8 text-center">
+          <div class="mb-4">
+            <i class="fa-solid fa-cart-shopping text-5xl text-gray-400"></i>
           </div>
-          <h2 class="text-2xl font-bold mb-2">Seu carrinho está vazio</h2>
-          <p class="text-gray-600 mb-6">Adicione alguns produtos incríveis ao seu carrinho!</p>
+          <h2 class="text-xl font-semibold text-gray-800 mb-2">Seu carrinho está vazio</h2>
+          <p class="text-gray-600 mb-6">Adicione alguns produtos ao seu carrinho.</p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <router-link to="/" class="px-6 py-3 bg-gradient-to-r from-purple-500 to-violet-700 text-white rounded-xl font-bold hover:scale-105 transition text-sm sm:text-base">
-              <i class="fa-solid fa-magnifying-glass mr-2"></i>Descubra Produtos
+            <router-link to="/" class="px-5 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition text-sm">
+              <i class="fa-solid fa-magnifying-glass mr-2"></i>Descobrir Produtos
             </router-link>
-            <router-link to="/" class="px-6 py-3 border-2 border-gray-200 rounded-xl font-bold hover:scale-105 transition text-sm sm:text-base">
+            <!-- <router-link to="/" class="px-5 py-2 border border-gray-400 text-gray-700 rounded hover:bg-gray-100 transition text-sm">
               <i class="fa-regular fa-heart mr-2"></i>Ver Favoritos
-            </router-link>
+            </router-link> -->
           </div>
         </div>
       </div>
 
       <!-- Resumo -->
       <div class="order-1 xl:order-2">
-        <div class="bg-gray-100 rounded-2xl shadow-md border border-white/20 p-6 sm:p-8">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="bg-gray-200 p-2 rounded-lg">
-              <i class="fa-solid fa-calculator text-xl bg-gradient-to-r from-purple-500 to-violet-700 bg-clip-text text-transparent"></i>
-            </div>
-            <h2 class="text-xl font-semibold text-slate-800">Resumo</h2>
+        <div class="bg-white rounded-xl shadow border border-gray-200 p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <i class="fa-solid fa-calculator text-lg text-gray-600"></i>
+            <h2 class="text-lg font-semibold text-gray-800">Resumo</h2>
           </div>
 
-          <div class="flex justify-between text-gray-600 mb-2">
+          <div class="flex justify-between text-sm text-gray-600 mb-2">
             <span>Subtotal</span>
-            <span class="font-bold">{{ formatarPreco(valorTotal) }}</span>
+            <span class="font-semibold">{{ formatarPreco(valorTotal) }}</span>
           </div>
-          <div class="flex justify-between text-gray-600 mb-2">
+          <div class="flex justify-between text-sm text-gray-600 mb-2">
             <span>Frete</span>
-            <span class="font-bold">{{ formatarPreco(0) }}</span>
+            <span class="font-semibold">{{ formatarPreco(0) }}</span>
           </div>
-          <div class="flex justify-between text-emerald-600 mb-4">
+          <div class="flex justify-between text-sm text-green-600 mb-4">
             <span>Desconto</span>
-            <span class="font-bold">-{{ formatarPreco(0) }}</span>
+            <span class="font-semibold">-{{ formatarPreco(0) }}</span>
           </div>
 
           <div class="border-t border-gray-200 pt-4 flex justify-between items-center">
-            <span class="text-lg font-bold text-slate-800">Total</span>
-            <span class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-violet-700 bg-clip-text text-transparent">
+            <span class="text-base font-semibold text-gray-800">Total</span>
+            <span class="text-xl font-bold text-gray-900">
               {{ hasItems ? formatarPreco(valorTotal) : formatarPreco(0) }}
             </span>
           </div>
 
-          <button @click="finalizar" class="mt-6 w-full p-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-center rounded-xl hover:scale-105 transition cursor-pointer">
-            <span class="text-white font-bold"><i class="fa-regular fa-credit-card mr-2"></i>Finalizar Compra</span>
+          <button @click="finalizar" class="mt-6 w-full py-3 bg-gray-800 text-white rounded hover:bg-gray-700 transition">
+            <i class="fa-regular fa-credit-card mr-2"></i>Finalizar Compra
           </button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { computed } from 'vue'

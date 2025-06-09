@@ -1,21 +1,18 @@
 <template>
-  <el-card
-    v-if="tipo === 'destaque' || tipo === 'novidade'"
-    class="produto-card"
-    :body-style="{ padding: '0px' }"
-  >
-    <div class="imagem-container">
-      <div v-if="tipo === 'destaque'" class="badge badge-destaque">
-        -{{ desconto }}%
-      </div>
-      <div v-if="tipo === 'novidade'" class="badge badge-novidade">
-        novo
-      </div>
+  <el-card v-if="tipo === 'destaque' || tipo === 'novidade'|| tipo === 'produtos'" class="produto-card" :body-style="{ padding: '0px' }">
+    <router-link :to="`/produto/${id}`">
+      <div class="imagem-container">
+        <div v-if="tipo === 'destaque'" class="badge badge-destaque">
+          -{{ desconto }}%
+        </div>
+        <div v-if="tipo === 'novidade'" class="badge badge-novidade">
+          novo
+        </div>
 
-      <img :src="computedImg" @error="onImageError" alt="Produto" class="imagem-produto" />
-      <!-- <HeartButton class="botao-heart" :applyStyle="true" /> -->
-    </div>
-
+        <img :src="computedImg" @error="onImageError" alt="Produto" class="imagem-produto" />
+        <!-- <HeartButton class="botao-heart" :applyStyle="true" /> -->
+      </div>
+    </router-link>
     <div class="info-container">
       <div class="card-titulo">{{ nome }}</div>
 
@@ -137,9 +134,9 @@ export default {
 }
 
 .imagem-produto {
-  width: 100%;
+  width: auto;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .badge {

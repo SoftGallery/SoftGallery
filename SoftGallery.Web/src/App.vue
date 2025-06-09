@@ -1,28 +1,32 @@
 <template>
   <el-container style="height: 100vh" v-if="!modoAdm">
     <el-header class="fixed-header">
-      <div class="menu-container">
+      <div class="menu-container" style="display: flex; justify-content: space-between; align-items: center;">
         <!-- <Logo /> -->
+        <img :src="logo" alt="Logo da loja" class="loja-img">
 
         <!-- Botão hamburguer visível em telas pequenas -->
         <button class="hamburguer" @click="menuAberto = !menuAberto">
           <i class="el-icon-menu"></i>
         </button>
 
-        <!-- Menu horizontal normal para telas grandes -->
-        <el-menu class="menu-desktop" :router="true" mode="horizontal" :default-active="$route.path">
-          <el-menu-item index="/">Home</el-menu-item>
-          <el-menu-item index="/sobre">Sobre</el-menu-item>
-          <el-menu-item index="/contato">Contato</el-menu-item>
-          <el-menu-item index="/login-adm">Login</el-menu-item>
-          <el-menu-item index="/adm/painel-adm">Adm</el-menu-item>
-        </el-menu>
+        <!-- <div style="display: flex; width: fit-content;"> -->
+          <!-- Menu horizontal normal para telas grandes -->
+          <el-menu class="menu-desktop" :router="true" mode="horizontal" :default-active="$route.path" style="display: flex; justify-content: right; align-items: center;">
+            <el-menu-item index="/">Home</el-menu-item>
+            <el-menu-item index="/produtos">Produtos</el-menu-item>
+            <el-menu-item index="/contato">Contato</el-menu-item>
+            <el-menu-item index="/login-adm">Login</el-menu-item>
+            <el-menu-item index="/adm/painel-adm">Adm</el-menu-item>
+            <router-link to="/carrinho"><cart-button /></router-link>
+          </el-menu>
 
-        <div class="interacoes">
-          <barra-de-pesquisa></barra-de-pesquisa>
-          <!-- <HeartButton /> -->
-          <router-link to="/carrinho"><cart-button /></router-link>
-        </div>
+          <!-- <div class="interacoes"> -->
+            <!-- <barra-de-pesquisa></barra-de-pesquisa> -->
+            <!-- <HeartButton /> -->
+            <!-- <router-link to="/carrinho"><cart-button /></router-link>
+          </div>
+        </div> -->
       </div>
 
       <!-- Menu dropdown para mobile -->
@@ -56,7 +60,7 @@ import Logo from './assets/Logo.vue'
 import { ref, onMounted, nextTick } from 'vue'
 import { registerAlert } from './services/alert.ts'
 import Alert from './components/Alert.vue'
-
+import axios from 'axios';
 
 const route = useRoute();
 const menuAberto = ref(false)
@@ -66,10 +70,17 @@ const rotasAdm = ['/adm/painel-adm', '/adm/produto', '/adm/campanha', '/adm/gera
 
 // Computa se está no modo adm
 const modoAdm = computed(() => rotasAdm.includes(route.path));
-
+const logo = ref('');
 
 const successAlertRef = ref(null)
-
+onMounted(async () => {
+  try {
+    const { data } = await axios.get('https://localhost:7273/api/Loja')
+    logo.value = data.imagemURL || ''
+  } catch {
+    console.log('Loja ainda não cadastrada.')
+  }
+})
 onMounted(async () => {
   await nextTick()
   registerAlert(successAlertRef.value.showAlert)
@@ -87,6 +98,10 @@ onMounted(async () => {
 body {
   font-family: "Geist", sans-serif;
   margin: 0;
+}
+
+.loja-img {
+  height: 50px;
 }
 
 /* Cabeçalho fixo */
@@ -162,6 +177,7 @@ body {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -190,6 +206,4 @@ body {
     display: flex;
   }
 }
-
-
 </style>

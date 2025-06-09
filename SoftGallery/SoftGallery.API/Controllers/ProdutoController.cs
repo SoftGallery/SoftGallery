@@ -37,22 +37,6 @@ namespace SoftGallery.API.Controllers
             return Ok(produto);
         }
 
-/*    [HttpGet("recomendations")]
-        public ActionResult<List<Produto>> GetProdutosRecomendados([FromQuery] int limite = 5)
-        {
-            try
-            {
-                var clienteId = User.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
-                var produtos = service.ObterProdutosRecomendados(clienteId, limite);
-
-                return Ok(produtos);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }*/
-
 
     [HttpPost]
         public ActionResult<Produto> CreateProduto([FromBody] ProdutoDTOListagem novoProdutoDTO)

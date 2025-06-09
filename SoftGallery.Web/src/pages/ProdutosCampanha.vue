@@ -4,33 +4,40 @@ import Footer from '../components/Footer.vue';
 import axios from 'axios';
 import { ResumoProdutoDTO } from '../dtos/produtoDTO';
 import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import Video from '../assets/video.mp4'
 
 const listaProdutos = ref<ResumoProdutoDTO[]>([]);
-const campanha = ref([]);
+const campanha = ref();
+const route = useRoute(); // <--- Captura o ID da rota
+const campanhaName = ref();
+
 onMounted(async () => {
+    const campanhaId = route.params.id as string; // id da URL
+
     try {
-        const response = await axios.get<ResumoProdutoDTO[]>('https://localhost:7273/api/Produto');
-        // const res = await axios.get('https://localhost:7273/api/Campanha');
-        // campanha.value = res.data
-        console.log(campanha.value)
-        listaProdutos.value = response.data.map((produto, index) => ({
+        const response = await axios.get(`https://localhost:7273/api/Campanha/${campanhaId}/produtos`);
+        const res = await axios.get(`https://localhost:7273/api/Campanha/${campanhaId}`);
+        campanha.value = response.data;
+        campanhaName.value = res.data.nome
+        listaProdutos.value = response.data.produtos.map((produto: ResumoProdutoDTO, index: number) => ({
             ...produto,
             tipo: index % 2 === 0 ? 'destaque' : 'novidade',
             avalicao: 4 + (Math.random() * 1)
         }));
     } catch (error) {
-        console.error('Erro ao carregar produtos:', error);
+        console.error('Erro ao carregar produtos da campanha:', error);
     }
 });
 </script>
+
 
 <template>
 
     <div
         class="h-[200px] flex items-center justify-center bg-gradient-to-b from-[#235997] to-transparent relative">
         <h1 class="text-white text-4xl font-light uppercase tracking-widest text-center">
-            {{ "Produtos" }}
+            {{ campanhaName || "Produtos Campanha" }}
         </h1>
     </div>
     <Section :produtosDestaque="listaProdutos" type="produtos" />

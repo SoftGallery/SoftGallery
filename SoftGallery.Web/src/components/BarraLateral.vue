@@ -9,7 +9,7 @@
         router
       >
       <el-menu-item class="itens logo">
-        <img src="../assets/logo.svg" alt="" style="width: 120px;">
+        <img :src="logo" alt="" style="height: 60px;">
       </el-menu-item>
         <el-menu-item index="/adm/geral">
           <el-icon><setting /></el-icon>
@@ -35,13 +35,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   Document,
   Menu as IconMenu,
   Setting,
 } from '@element-plus/icons-vue'
+import axios from 'axios';
 
 const route = useRoute()
 const isAdminRoute = computed(() => route.path.startsWith('/adm'))
@@ -53,19 +54,31 @@ const handleOpen = (key: string, keyPath: string[]) => {
 const handleClose = (key: string, keyPath: string[]) => {
   console.log('Fechado:', key, keyPath)
 }
+
+const logo = ref('');
+
+onMounted(async () => {
+  try {
+    const { data } = await axios.get('https://localhost:7273/api/Loja')
+    logo.value = data.imagemURL || ''
+  } catch {
+    console.log('Loja ainda não cadastrada.')
+  }
+})
 </script>
 
 
 <style scoped>
 .el-col:not(.admin-bg),
 .el-menu-vertical-demo {
-  height: calc(100vh - 1rem);
+  height: calc(100vh);
   border-right: none;
   max-width: 250px;
 }
 
 .el-menu-vertical-demo{
-    background-color: #fbfbfb !important;
+    height: 100vh;
+    background-color: white !important;
     box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
 }
 
@@ -73,8 +86,8 @@ const handleClose = (key: string, keyPath: string[]) => {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
 }
 
 .admin-bg {
